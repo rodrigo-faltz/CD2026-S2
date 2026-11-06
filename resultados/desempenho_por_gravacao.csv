@@ -1,0 +1,51 @@
+file_id,classe,modelo,n_janelas,fracao_correta
+100,Normal,IsolationForest,59,0.7627118644067796
+100,Normal,OneClassSVM,59,0.0
+100,Normal,RandomForest,59,1.0
+100,Normal,SVM_RBF,59,1.0
+100,Normal,Baseline_dummy,59,0.0
+108,Pista interna,IsolationForest,60,1.0
+108,Pista interna,OneClassSVM,60,1.0
+108,Pista interna,RandomForest,60,0.03333333333333333
+108,Pista interna,SVM_RBF,60,1.0
+108,Pista interna,Baseline_dummy,60,0.0
+121,Esfera,IsolationForest,59,1.0
+121,Esfera,OneClassSVM,59,1.0
+121,Esfera,RandomForest,59,1.0
+121,Esfera,SVM_RBF,59,1.0
+121,Esfera,Baseline_dummy,59,1.0
+133,Pista externa,IsolationForest,59,1.0
+133,Pista externa,OneClassSVM,59,1.0
+133,Pista externa,RandomForest,59,1.0
+133,Pista externa,SVM_RBF,59,1.0
+133,Pista externa,Baseline_dummy,59,0.0
+172,Pista interna,IsolationForest,59,1.0
+172,Pista interna,OneClassSVM,59,1.0
+172,Pista interna,RandomForest,59,0.4745762711864407
+172,Pista interna,SVM_RBF,59,1.0
+172,Pista interna,Baseline_dummy,59,0.0
+188,Esfera,IsolationForest,59,1.0
+188,Esfera,OneClassSVM,59,1.0
+188,Esfera,RandomForest,59,1.0
+188,Esfera,SVM_RBF,59,0.9152542372881356
+188,Esfera,Baseline_dummy,59,1.0
+200,Pista externa,IsolationForest,59,1.0
+200,Pista externa,OneClassSVM,59,1.0
+200,Pista externa,RandomForest,59,0.9830508474576272
+200,Pista externa,SVM_RBF,59,1.0
+200,Pista externa,Baseline_dummy,59,0.0
+212,Pista interna,IsolationForest,59,1.0
+212,Pista interna,OneClassSVM,59,1.0
+212,Pista interna,RandomForest,59,1.0
+212,Pista interna,SVM_RBF,59,1.0
+212,Pista interna,Baseline_dummy,59,0.0
+225,Esfera,IsolationForest,59,1.0
+225,Esfera,OneClassSVM,59,1.0
+225,Esfera,RandomForest,59,1.0
+225,Esfera,SVM_RBF,59,1.0
+225,Esfera,Baseline_dummy,59,1.0
+237,Pista externa,IsolationForest,59,1.0
+237,Pista externa,OneClassSVM,59,1.0
+237,Pista externa,RandomForest,59,0.9830508474576272
+237,Pista externa,SVM_RBF,59,1.0
+237,Pista externa,Baseline_dummy,59,0.0

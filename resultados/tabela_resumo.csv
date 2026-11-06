@@ -1,0 +1,6 @@
+Dataset,Técnica,Tipo de falha identificada,Taxa de detecção (TPR),Falso positivo (FPR),Acurácia por classe (recall)
+CWRU — recorte DE,IsolationForest,não se aplica,1.0,0.23728813559322035,não se aplica
+CWRU — recorte DE,OneClassSVM,não se aplica,1.0,1.0,não se aplica
+CWRU — recorte DE,RandomForest,Pista interna; Esfera; Pista externa,1.0,0.0,Normal: 1.0000; Pista interna: 0.5000; Esfera: 1.0000; Pista externa: 0.9887
+CWRU — recorte DE,SVM_RBF,Pista interna; Esfera; Pista externa,1.0,0.0,Normal: 1.0000; Pista interna: 1.0000; Esfera: 0.9718; Pista externa: 1.0000
+CWRU — recorte DE,Baseline_dummy,Pista interna; Esfera; Pista externa,1.0,1.0,Normal: 0.0000; Pista interna: 0.0000; Esfera: 1.0000; Pista externa: 0.0000

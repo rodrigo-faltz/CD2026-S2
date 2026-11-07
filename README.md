@@ -1,88 +1,104 @@
-# Baixar o projeto CWRU
+# Detecção e diagnóstico de falhas em rolamentos — CWRU 48 kHz
 
-- **[Baixar pacote completo — documentos + dados reais](https://github.com/rodrigo-faltz/CD2026-S2/raw/refs/heads/main/Projeto_CWRU_Completo.zip)** (aproximadamente 48 MB).
-- **[Baixar pacote leve — documentos, sem os MAT](https://github.com/rodrigo-faltz/CD2026-S2/raw/refs/heads/main/Projeto_CWRU_Sem_Dados.zip)**. O notebook baixa os dados quando for executado.
-- **[Abrir a análise no Google Colab](https://colab.research.google.com/github/rodrigo-faltz/CD2026-S2/blob/main/CWRU_Projeto.ipynb)**.
+**ECM514 — Ciência de Dados · Projeto Desafio do 2º semestre de 2026**
 
-Depois do download, extraia o ZIP. O pacote contém relatório Word/Markdown/HTML, slides PowerPoint/PDF, notebook executado, código, referências, métricas e roteiro de apresentação. Os mesmos arquivos estão disponíveis individualmente neste repositório.
+**Integrantes:** Nome Sobrenome (RA) · Nome Sobrenome (RA) · Nome Sobrenome (RA)
 
----
+[![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rodrigo-faltz/CD2026-S2/blob/main/CWRU_Projeto.ipynb)
 
-# ECM514 — CWRU: detecção e diagnóstico de falhas
-
-Projeto executado sobre 40 gravações reais do CWRU. A SVM RBF apresentou acurácia de 99,15% no teste de carga reservada. O detector Isolation Forest apresentou TPR de 100% e FPR de 23,73%; os falsos alarmes são uma limitação central. Leia a discussão e a premissa de taxa de aquisição no relatório antes de interpretar os resultados.
+Detectamos e diagnosticamos defeitos de rolamento (pista interna, esfera e pista externa) em 40 gravações reais de
+vibração do *Bearing Data Center* da Case Western Reserve University, comparando cinco detectores de anomalia, dois
+classificadores e uma regra física baseada em análise de envelope. Os modelos são avaliados em **cargas** e em
+**diâmetros de defeito** que não viram no treino.
 
 ## Sumário de entregas
 
-- [Notebook executado e autocontido](CWRU_Projeto.ipynb)
-- [Relatório técnico](RELATORIO.md) e [versão Word](RELATORIO.docx)
-- [Slides editáveis](APRESENTACAO.pptx) e [slides em PDF](APRESENTACAO.pdf)
-- [Roteiro de 4min40s](ROTEIRO_VIDEO.md)
-- [Dados e rastreabilidade](dados/manifesto.csv); arquivos MAT em `dados/raw/` no pacote completo
-- [Tabela padronizada de resultados](resultados/tabela_resumo.csv)
-- [Métricas detalhadas](resultados/metricas.json), matrizes PNG/CSV e predições em `resultados/`
-- [Referências, ao menos duas por técnica](REFERENCIAS.md)
-- [Código Python](analise.py), [dependências](requirements.txt) e [validação da entrega](VALIDACAO.md)
-- **Vídeo no YouTube:** pendente de gravação e publicação pelo grupo; inserir aqui o link real.
-- **Repositório GitHub:** https://github.com/rodrigo-faltz/CD2026-S2
-- **Integrantes:** preencher nomes e RAs de até seis alunos.
+| Entrega | Arquivo |
+|---|---|
+| Notebook executável no Colab (código, análises e figuras) | [`CWRU_Projeto.ipynb`](CWRU_Projeto.ipynb) |
+| Relatório técnico | [`RELATORIO.md`](RELATORIO.md) · [`RELATORIO.docx`](RELATORIO.docx) |
+| Dados empregados (40 arquivos MAT originais) | [`dados/raw/`](dados/raw/) · [`dados/manifesto.csv`](dados/manifesto.csv) |
+| Tabela resumo de resultados | [abaixo](#tabela-resumo-de-resultados) · [`resultados/tabela_resumo.csv`](resultados/tabela_resumo.csv) |
+| Matrizes de confusão completas | [Anexo A do relatório](RELATORIO.md#anexo-a--matrizes-de-confusão-completas) · `resultados/matriz_*.csv` |
+| Slides da apresentação | [`APRESENTACAO.pptx`](APRESENTACAO.pptx) · [`APRESENTACAO.pdf`](APRESENTACAO.pdf) |
+| Vídeo da apresentação (até 5 min) | **YouTube:** _link do vídeo_ |
+| Roteiro do vídeo | [`ROTEIRO_VIDEO.md`](ROTEIRO_VIDEO.md) |
+| Referências bibliográficas | [`REFERENCIAS.md`](REFERENCIAS.md) |
+| Declaração de uso de IA | [Seção 9 do relatório](RELATORIO.md#9-declaração-de-uso-de-inteligência-artificial) |
+| Registro de validação da execução | [`VALIDACAO.md`](VALIDACAO.md) |
 
-## Executar no Google Colab
+## Tabela resumo de resultados
 
-1. Abra https://colab.research.google.com/ e escolha **Arquivo → Fazer upload de notebook**.
-2. Envie `CWRU_Projeto.ipynb`. Não é necessário enviar o ZIP, montar Drive ou obter token do Kaggle.
-3. Use ambiente Python com CPU e execute todas as células, incluindo a instalação. Se o Colab solicitar reinício após instalar, reinicie e execute novamente.
-4. O notebook baixa cerca de 134 MiB da fonte oficial (40 arquivos) e verifica SHA-256. Não há substituição por dados artificiais se a rede falhar.
-5. As saídas surgem em `resultados/` e os MAT em `dados/raw/` no diretório da sessão. A última célula permite baixar resultados compactados no Colab.
-6. O relatório já está incorporado ao notebook. A pasta do ZIP adicional permite abrir figuras externas em Markdown/Word.
+Validação cruzada deixando uma **carga** de fora (4 dobras), conjunto de atributos adimensionais + envelope. Métricas por
+janela somando as dobras, exceto a regra de envelope (por gravação). N = normal, PI = pista interna, E = esfera,
+PE = pista externa. "Tipo de falha identificada" lista as classes com recall ≥ 0,5; "acurácia por classe" é o recall.
 
-O notebook foi testado por execução integral em Python na sessão, com versões fixadas; a execução no serviço Colab ainda deve ser conferida pelo grupo. Não há necessidade de GPU. O tempo depende da rede e da máquina.
+| Dataset | Técnica | Tipo de falha identificada | Taxa de detecção (TPR) | Falso positivo (FPR) | Acurácia por classe (recall) |
+|:--|:--|:--|--:|--:|:--|
+| CWRU 48 kHz DE | Curtose do envelope — detecção | não se aplica | 0,6790 | 0,0297 | não se aplica |
+| CWRU 48 kHz DE | Mahalanobis — detecção | não se aplica | 0,7282 | 0,1386 | não se aplica |
+| CWRU 48 kHz DE | Isolation Forest — detecção | não se aplica | 0,8076 | 0,0891 | não se aplica |
+| CWRU 48 kHz DE | One-Class SVM — detecção | não se aplica | 0,5593 | 0,1386 | não se aplica |
+| CWRU 48 kHz DE | Autoencoder — detecção | não se aplica | 0,7192 | 0,1386 | não se aplica |
+| CWRU 48 kHz DE | Random Forest — diagnóstico | Pista interna; Esfera; Pista externa | 0,9989 | 0,0000 | N: 1,00; PI: 0,95; E: 0,99; PE: 0,95 |
+| CWRU 48 kHz DE | SVM RBF — diagnóstico | Pista interna; Esfera; Pista externa | 1,0000 | 0,0495 | N: 0,95; PI: 0,97; E: 0,92; PE: 0,90 |
+| CWRU 48 kHz DE | Baseline majoritário — diagnóstico | Esfera | 1,0000 | 1,0000 | N: 0,00; PI: 0,00; E: 1,00; PE: 0,00 |
+| CWRU 48 kHz DE | Regra de envelope — diagnóstico, por gravação | Pista interna; Pista externa | 0,5833 | 0,2500 | N: 0,75; PI: 0,83; E: 0,00; PE: 0,75 |
 
-## Executar localmente
+**Principais conclusões**
 
-Python 3.12 é a versão de referência. No terminal, a partir da pasta deste README:
+- **Detecção:** os escores separam normal e falha quase perfeitamente (ROC-AUC de 0,975 a 1,000), mas o limiar não se
+  transfere entre cargas com só quatro gravações normais. Com uma referência normal em cada carga, a distância de
+  Mahalanobis detecta 100% das falhas sem falsos alarmes.
+- **Diagnóstico com carga nova:** Random Forest acerta 96,8% das janelas e 92,5% das gravações.
+- **Diagnóstico com diâmetro de defeito novo:** os classificadores com atributos estatísticos caem abaixo do acaso
+  (macro-F1 ≤ 0,13). A regra de envelope, baseada na física do rolamento, acerta 69% das gravações. A acurácia alta
+  com carga nova vem, em boa parte, do reconhecimento de rolamentos já vistos.
+
+## Como executar
+
+### No Google Colab (recomendado)
+
+1. Clique no botão **Abrir no Colab** acima.
+2. Menu **Ambiente de execução → Executar tudo**.
+
+Não é preciso GPU, conta do Kaggle nem upload de arquivos. O notebook baixa os 40 arquivos (≈ 275 MB) da fonte oficial
+do CWRU, confere o SHA-256 de cada um e gera tudo em `resultados/`. A execução leva cerca de 3 a 5 minutos. O Colab já
+traz as bibliotecas necessárias; para usar exatamente as versões da execução de referência, mude `PINAR_VERSOES` para
+`True` na primeira célula.
+
+### Localmente
+
+Python 3.12 é a versão de referência.
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
 python -m pip install -r requirements.txt
-python analise.py
+jupyter nbconvert --to notebook --execute --inplace CWRU_Projeto.ipynb
 ```
 
-No Windows, ative com `.venv\Scripts\activate`. Os arquivos baixados são reutilizados, mas seus hashes são conferidos. Em caso de falha de integridade, não ignore a checagem: confira a origem e o manifesto. A pasta de resultados será atualizada pela execução.
+Com o repositório clonado, os dados de `dados/raw/` são usados diretamente (após a conferência dos hashes).
 
-Para reproduzir a sensibilidade de taxa, depois da análise principal:
+## Dados
 
-```bash
-python sensibilidade.py
+- **Fonte:** CWRU Bearing Data Center — [normais](https://engineering.case.edu/bearingdatacenter/normal-baseline-data) e
+  [falhas no drive end a 48 kHz](https://engineering.case.edu/bearingdatacenter/48k-drive-end-bearing-fault-data).
+- **Recorte:** 4 gravações normais e 36 com falha (pista interna, esfera e pista externa a 6h × diâmetros de 0,007",
+  0,014" e 0,021" × cargas de 0 a 3 HP), canal do drive end, todas a 48 kHz. A justificativa está na seção 2.2 do
+  relatório.
+- **Integridade:** [`dados/manifesto.csv`](dados/manifesto.csv) lista URL oficial, SHA-256, canal, amostras e rotação de
+  cada arquivo.
+- São medições reais de bancada, com defeitos induzidos por eletroerosão. Nenhum dado sintético foi usado.
+
+## Estrutura do repositório
+
 ```
-
-Esse cenário escreve em `experimento_taxa_12k/resultados/`, sem substituir os resultados principais.
-
-## Protocolo e resultados
-
-Treino: cargas 0–1 HP; validação: 2 HP; teste: 3 HP. Nenhuma gravação atravessa partições. O protocolo conserva possíveis rolamentos físicos compartilhados entre cargas, de modo que a conclusão se restringe à mudança de carga no domínio selecionado.
-
-| Dataset           | Técnica         | Tipo de falha identificada           |   Taxa de detecção (TPR) |   Falso positivo (FPR) | Acurácia por classe (recall)                                                 |
-|:------------------|:----------------|:-------------------------------------|-------------------------:|-----------------------:|:-----------------------------------------------------------------------------|
-| CWRU — recorte DE | IsolationForest | não se aplica                        |                   1.0000 |                 0.2373 | não se aplica                                                                |
-| CWRU — recorte DE | OneClassSVM     | não se aplica                        |                   1.0000 |                 1.0000 | não se aplica                                                                |
-| CWRU — recorte DE | RandomForest    | Pista interna; Esfera; Pista externa |                   1.0000 |                 0.0000 | Normal: 1.0000; Pista interna: 0.5000; Esfera: 1.0000; Pista externa: 0.9887 |
-| CWRU — recorte DE | SVM_RBF         | Pista interna; Esfera; Pista externa |                   1.0000 |                 0.0000 | Normal: 1.0000; Pista interna: 1.0000; Esfera: 0.9718; Pista externa: 1.0000 |
-| CWRU — recorte DE | Baseline_dummy  | Pista interna; Esfera; Pista externa |                   1.0000 |                 1.0000 | Normal: 0.0000; Pista interna: 0.0000; Esfera: 1.0000; Pista externa: 0.0000 |
-
-Valores em proporções. A coluna por classe representa recall. Todas as quatro classes do recorte estão nas matrizes completas. A SVM foi selecionada por macro-F1 na validação, antes de examinar o teste. Não foi ajustado um novo limiar no teste.
-
-**Premissa a conferir:** baseline 97–100 interpretado a 48 kHz e reduzido a 12 kHz com anti-aliasing; falhas DE da coleção 12 kHz. Os MAT não informam explicitamente a taxa. Uma sensibilidade alternativa de 12 kHz, com números diferentes de janelas, consta no relatório. Não tratar as métricas como independentes dessa premissa.
-
-## Dados e publicação
-
-Origem: https://engineering.case.edu/bearingdatacenter/welcome. Os arquivos MAT do pacote completo são cópias dos downloads oficiais, sem geração de dados. O manifesto lista os URLs e hashes. Os defeitos foram induzidos por EDM, mas a vibração foi medida em bancada. O recorte cobre quatro famílias de condição, três diâmetros e pista externa apenas a 6 horas.
-
-Cada MAT é menor que 100 MB. Pode-se publicar os 40 arquivos individualmente em `dados/raw/` no GitHub; **não enviar o ZIP completo como um único arquivo ao repositório**, pois pode ultrapassar 100 MB. Alternativamente disponibilizar os MAT em Drive público e inserir o link. O download automático oficial também é implementado para reprodutibilidade.
-
-Antes de enviar: preencher autores; conferir premissa de aquisição e referências; executar no Colab; revisar relatório e slides; conferir os arquivos publicados no GitHub; gravar vídeo de no máximo cinco minutos; inserir URL real do YouTube. O prazo de cadastro indicado no enunciado é 17/09/2026; o PDF não informa uma data final de entrega.
-
-## Uso de IA
-
-ChatGPT/Codex auxiliou na interpretação do enunciado, elaboração e execução do código e preparação do texto e slides. Os resultados foram calculados em dados reais. O grupo precisa revisar e validar o material e declarar esse uso na versão final, conforme solicitado pelo professor.
+CWRU_Projeto.ipynb    notebook (única fonte de código)
+RELATORIO.md/.docx    relatório técnico
+APRESENTACAO.pptx/.pdf, ROTEIRO_VIDEO.md
+REFERENCIAS.md, VALIDACAO.md, requirements.txt
+dados/raw/            40 arquivos .mat originais
+dados/manifesto.csv   rastreabilidade dos dados
+resultados/           métricas, predições, matrizes e figuras geradas pelo notebook
+```

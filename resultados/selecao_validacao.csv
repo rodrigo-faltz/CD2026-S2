@@ -1,8 +1,0 @@
-modelo,parametros,macro_f1
-RandomForest,folha=1,0.9971751412429379
-RandomForest,folha=3,0.9971751412429379
-RandomForest,folha=5,0.9971751412429379
-SVM_RBF,C=0.1,1.0
-SVM_RBF,C=1,0.9985875593504369
-SVM_RBF,C=10,0.9985875593504369
-Baseline_dummy,most_frequent,0.11538461538461539

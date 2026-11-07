@@ -1,17 +1,36 @@
-# Validação da entrega
+# Registro de validação
 
-Execução realizada em 06/11/2026.
+Execução em 6 nov. 2026, Windows 11, Python 3.12, versões de `requirements.txt`.
 
-- 40 arquivos MAT reais baixados da fonte oficial, com canais e SHA-256 verificados.
-- 2.331 janelas: 1.150 de treino, 590 de validação e 591 de teste.
-- 17 atributos numéricos finitos; nenhum ID de gravação atravessa partições.
-- Código Python executado integralmente e notebook executado novamente em diretório limpo, sem arquivos auxiliares; oito células de código executadas, zero erros.
-- As métricas e o manifesto da reexecução independente do notebook foram idênticos aos do script.
-- Matrizes de diagnóstico 4×4 conferidas: 591 exemplos cada e acurácias consistentes com metricas.json.
-- Cenário de sensibilidade à taxa do baseline executado separadamente e documentado.
-- Notebook validado contra o schema nbformat; PPTX reaberto com oito slides; DOCX reaberto; slides em PDF renderizados e inspecionados visualmente.
-- Integridade das entradas e ausência de vazamento entre gravações verificadas por asserções executáveis.
+## Reprodutibilidade
 
-## Limites desta validação
+| Verificação | Resultado |
+|---|---|
+| Notebook executado num diretório vazio com `jupyter nbconvert --execute` (comando do README) | Sem erros, 280 s |
+| Download dos 40 arquivos da fonte oficial do CWRU | 40/40 com SHA-256 igual ao esperado |
+| Mesmo notebook executado no repositório, com os dados de `dados/raw/` | Sem erros |
+| Comparação das duas execuções | 27 arquivos de resultados (CSV, JSON, MD) e o manifesto **idênticos** |
+| Schema do notebook (`nbformat.validate`) | Válido |
 
-O notebook foi executado em Python 3.12 nesta sessão, não no serviço Google Colab. A compatibilidade proposta usa instalação por pip e somente bibliotecas comuns, mas o grupo deve confirmar uma execução no Colab. A premissa de taxa de aquisição do baseline está explicitada no relatório e depende de conferência documental; a sensibilidade não substitui essa confirmação. Não se verificou generalização para rolamentos físicos inéditos ou falhas naturais. A execução não realizou cadastro acadêmico nem publicação de vídeo no YouTube. O material está sendo publicado no repositório indicado no README.
+## Integridade e protocolo
+
+- Os 40 arquivos têm o SHA-256 fixado no notebook; a execução para se algum divergir. Não há geração de dados
+  substitutos.
+- O servidor do CWRU às vezes interrompe a transferência de arquivos grandes (observado nos arquivos 204, 217, 239 e
+  240). O notebook tenta até 5 vezes por fonte, com espera crescente, e só aceita o arquivo se o hash conferir.
+- Toda divisão de dados é feita por gravação (carga ou diâmetro); janelas de uma mesma gravação nunca aparecem em treino
+  e teste ao mesmo tempo.
+- Hiperparâmetros são escolhidos por validação cruzada interna dentro de cada dobra; o teste externo é usado uma vez.
+- Limiares de detecção são calibrados apenas com dados normais de treino.
+
+## Referências
+
+Os 24 DOIs da lista de referências foram consultados no Crossref (título, autores, periódico, volume, páginas e ano). As
+páginas do CWRU foram acessadas diretamente; a tabela de arquivos de 48 kHz e a geometria do rolamento conferem com o
+código.
+
+## Não verificado
+
+- A execução no serviço Google Colab não foi feita nesta validação. O notebook usa apenas bibliotecas presentes no Colab
+  e não depende de arquivos locais; para usar exatamente as versões de referência, há a opção `PINAR_VERSOES = True`.
+- Com versões de bibliotecas diferentes das de referência, os resultados podem variar ligeiramente.

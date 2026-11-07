@@ -1,5 +1,5 @@
-classe,teste,treino,validacao
-Normal,59,88,59
-Pista interna,178,354,177
-Esfera,177,354,177
-Pista externa,177,354,177
+classe,0 HP,1 HP,2 HP,3 HP,total
+Normal,14,29,29,29,101
+Pista interna,31,81,87,87,286
+Esfera,43,87,87,87,304
+Pista externa,43,87,87,87,304

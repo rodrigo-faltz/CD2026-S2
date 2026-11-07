@@ -1,0 +1,16 @@
+protocolo,método,conjunto,acurácia,macro-F1,gravações
+carga não vista,Regra de envelope (física),—,0.55,0.4824675324675325,40
+carga não vista,Random Forest (voto das janelas),A: estatísticos + espectro (com amplitude),0.925,0.9386253842775583,40
+carga não vista,SVM RBF (voto das janelas),A: estatísticos + espectro (com amplitude),0.925,0.937391304347826,40
+carga não vista,Random Forest (voto das janelas),B: adimensionais + envelope,0.925,0.9386253842775583,40
+carga não vista,SVM RBF (voto das janelas),B: adimensionais + envelope,0.9,0.9180602006688963,40
+carga não vista,Baseline majoritário (voto das janelas),B: adimensionais + envelope,0.3,0.11538461538461539,40
+carga não vista,Random Forest (voto das janelas),C: somente envelope,0.85,0.816403162055336,40
+carga não vista,SVM RBF (voto das janelas),C: somente envelope,0.85,0.8111001317523057,40
+diâmetro não visto,Regra de envelope (física),—,0.6944444444444444,0.6810872497147007,36
+diâmetro não visto,Random Forest (voto das janelas),A: estatísticos + espectro (com amplitude),0.25,0.2110016420361248,36
+diâmetro não visto,SVM RBF (voto das janelas),A: estatísticos + espectro (com amplitude),0.2222222222222222,0.18209876543209877,36
+diâmetro não visto,Random Forest (voto das janelas),B: adimensionais + envelope,0.2222222222222222,0.18412698412698414,36
+diâmetro não visto,SVM RBF (voto das janelas),B: adimensionais + envelope,0.1111111111111111,0.08333333333333333,36
+diâmetro não visto,Random Forest (voto das janelas),C: somente envelope,0.5555555555555556,0.4691666666666667,36
+diâmetro não visto,SVM RBF (voto das janelas),C: somente envelope,0.6388888888888888,0.6182716049382716,36

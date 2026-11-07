@@ -1,180 +1,400 @@
 {
-  "IsolationForest": {
-    "TN": 45,
-    "FP": 14,
-    "FN": 0,
-    "TP": 532,
-    "TPR": 1.0,
-    "FPR": 0.23728813559322035,
-    "ROC_AUC": 0.9923856250796482,
-    "limiar": 0.6009982925409771,
-    "FPR_validacao": 0.03389830508474576
-  },
-  "OneClassSVM": {
-    "TN": 0,
-    "FP": 59,
-    "FN": 0,
-    "TP": 532,
-    "TPR": 1.0,
-    "FPR": 1.0,
-    "ROC_AUC": 1.0,
-    "limiar": -0.08105413611492807,
-    "FPR_validacao": 0.03389830508474576
-  },
-  "RandomForest": {
-    "TN": 59,
-    "FP": 0,
-    "FN": 0,
-    "TP": 532,
-    "TPR": 1.0,
-    "FPR": 0.0,
-    "acuracia": 0.8460236886632826,
-    "macro_f1": 0.8639486458982728,
-    "balanced_accuracy": 0.8721751412429378,
-    "relatorio": {
-      "Normal": {
-        "precision": 1.0,
-        "recall": 1.0,
-        "f1-score": 1.0,
-        "support": 59.0
-      },
-      "Pista interna": {
-        "precision": 0.9888888888888889,
-        "recall": 0.5,
-        "f1-score": 0.664179104477612,
-        "support": 178.0
-      },
-      "Esfera": {
-        "precision": 0.6629213483146067,
-        "recall": 1.0,
-        "f1-score": 0.7972972972972973,
-        "support": 177.0
-      },
-      "Pista externa": {
-        "precision": 1.0,
-        "recall": 0.9887005649717514,
-        "f1-score": 0.9943181818181818,
-        "support": 177.0
-      },
-      "accuracy": 0.8460236886632826,
-      "macro avg": {
-        "precision": 0.9129525593008739,
-        "recall": 0.8721751412429378,
-        "f1-score": 0.8639486458982727,
-        "support": 591.0
-      },
-      "weighted avg": {
-        "precision": 0.8957010167071194,
-        "recall": 0.8460236886632826,
-        "f1-score": 0.8364463966166746,
-        "support": 591.0
-      }
+  "deteccao": [
+    {
+      "detector": "Curtose do envelope (indicador)",
+      "TPR": 0.6789709172259508,
+      "FPR": 0.0297029702970297,
+      "ROC-AUC (média)": 0.8291632623048304,
+      "AP (média)": 0.9798600259567831,
+      "TPR gravação": 0.6666666666666666,
+      "FPR gravação": 0.0,
+      "normais com alarme": "0/4",
+      "FPR 0 HP": 0.0,
+      "FPR 1 HP": 0.06896551724137931,
+      "FPR 2 HP": 0.034482758620689655,
+      "FPR 3 HP": 0.0
     },
-    "parametros": "folha=1",
-    "macro_f1_validacao": 0.9971751412429379
-  },
-  "SVM_RBF": {
-    "TN": 59,
-    "FP": 0,
-    "FN": 0,
-    "TP": 532,
-    "TPR": 1.0,
-    "FPR": 0.0,
-    "acuracia": 0.9915397631133672,
-    "macro_f1": 0.9929364439584647,
-    "balanced_accuracy": 0.9929378531073446,
-    "relatorio": {
-      "Normal": {
-        "precision": 1.0,
-        "recall": 1.0,
-        "f1-score": 1.0,
-        "support": 59.0
-      },
-      "Pista interna": {
-        "precision": 1.0,
-        "recall": 1.0,
-        "f1-score": 1.0,
-        "support": 178.0
-      },
-      "Esfera": {
-        "precision": 1.0,
-        "recall": 0.9717514124293786,
-        "f1-score": 0.9856733524355301,
-        "support": 177.0
-      },
-      "Pista externa": {
-        "precision": 0.9725274725274725,
-        "recall": 1.0,
-        "f1-score": 0.9860724233983287,
-        "support": 177.0
-      },
-      "accuracy": 0.9915397631133672,
-      "macro avg": {
-        "precision": 0.9931318681318682,
-        "recall": 0.9929378531073446,
-        "f1-score": 0.9929364439584647,
-        "support": 591.0
-      },
-      "weighted avg": {
-        "precision": 0.9917721872036593,
-        "recall": 0.9915397631133672,
-        "f1-score": 0.9915380749959273,
-        "support": 591.0
-      }
+    {
+      "detector": "Mahalanobis",
+      "TPR": 0.7281879194630873,
+      "FPR": 0.13861386138613863,
+      "ROC-AUC (média)": 1.0,
+      "AP (média)": 0.9999999999999999,
+      "TPR gravação": 0.7777777777777778,
+      "FPR gravação": 0.25,
+      "normais com alarme": "1/4",
+      "FPR 0 HP": 1.0,
+      "FPR 1 HP": 0.0,
+      "FPR 2 HP": 0.0,
+      "FPR 3 HP": 0.0
     },
-    "parametros": "C=0.1",
-    "macro_f1_validacao": 1.0
-  },
-  "Baseline_dummy": {
-    "TN": 0,
-    "FP": 59,
-    "FN": 0,
-    "TP": 532,
-    "TPR": 1.0,
-    "FPR": 1.0,
-    "acuracia": 0.29949238578680204,
-    "macro_f1": 0.115234375,
-    "balanced_accuracy": 0.25,
-    "relatorio": {
-      "Normal": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1-score": 0.0,
-        "support": 59.0
-      },
-      "Pista interna": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1-score": 0.0,
-        "support": 178.0
-      },
-      "Esfera": {
-        "precision": 0.29949238578680204,
-        "recall": 1.0,
-        "f1-score": 0.4609375,
-        "support": 177.0
-      },
-      "Pista externa": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1-score": 0.0,
-        "support": 177.0
-      },
-      "accuracy": 0.29949238578680204,
-      "macro avg": {
-        "precision": 0.07487309644670051,
-        "recall": 0.25,
-        "f1-score": 0.115234375,
-        "support": 591.0
-      },
-      "weighted avg": {
-        "precision": 0.08969568914427066,
-        "recall": 0.29949238578680204,
-        "f1-score": 0.13804727157360405,
-        "support": 591.0
-      }
+    {
+      "detector": "Isolation Forest",
+      "TPR": 0.8076062639821029,
+      "FPR": 0.0891089108910891,
+      "ROC-AUC (média)": 0.9754023061097972,
+      "AP (média)": 0.9969469761410839,
+      "TPR gravação": 0.8055555555555556,
+      "FPR gravação": 0.25,
+      "normais com alarme": "1/4",
+      "FPR 0 HP": 0.6428571428571429,
+      "FPR 1 HP": 0.0,
+      "FPR 2 HP": 0.0,
+      "FPR 3 HP": 0.0
     },
-    "parametros": "most_frequent",
-    "macro_f1_validacao": 0.11538461538461539
-  }
+    {
+      "detector": "One-Class SVM",
+      "TPR": 0.5592841163310962,
+      "FPR": 0.13861386138613863,
+      "ROC-AUC (média)": 1.0,
+      "AP (média)": 1.0,
+      "TPR gravação": 0.6388888888888888,
+      "FPR gravação": 0.25,
+      "normais com alarme": "1/4",
+      "FPR 0 HP": 1.0,
+      "FPR 1 HP": 0.0,
+      "FPR 2 HP": 0.0,
+      "FPR 3 HP": 0.0
+    },
+    {
+      "detector": "Autoencoder",
+      "TPR": 0.7192393736017897,
+      "FPR": 0.13861386138613863,
+      "ROC-AUC (média)": 1.0,
+      "AP (média)": 0.9999999999999999,
+      "TPR gravação": 0.7777777777777778,
+      "FPR gravação": 0.25,
+      "normais com alarme": "1/4",
+      "FPR 0 HP": 1.0,
+      "FPR 1 HP": 0.0,
+      "FPR 2 HP": 0.0,
+      "FPR 3 HP": 0.0
+    }
+  ],
+  "deteccao_referencia_por_carga": [
+    {
+      "detector": "Curtose do envelope (indicador)",
+      "TPR": 0.7002237136465325,
+      "FPR": 0.03225806451612903,
+      "ROC-AUC": 0.8098434004474273,
+      "AP": 0.9926097648143548
+    },
+    {
+      "detector": "Mahalanobis",
+      "TPR": 1.0,
+      "FPR": 0.0,
+      "ROC-AUC": 1.0,
+      "AP": 1.0
+    },
+    {
+      "detector": "Isolation Forest",
+      "TPR": 0.7259507829977628,
+      "FPR": 0.03225806451612903,
+      "ROC-AUC": 0.9731904452623223,
+      "AP": 0.9989315052251035
+    },
+    {
+      "detector": "One-Class SVM",
+      "TPR": 1.0,
+      "FPR": 0.03225806451612903,
+      "ROC-AUC": 1.0,
+      "AP": 1.0
+    },
+    {
+      "detector": "Autoencoder",
+      "TPR": 1.0,
+      "FPR": 0.03225806451612903,
+      "ROC-AUC": 1.0,
+      "AP": 1.0
+    }
+  ],
+  "comparacao_por_gravacao": [
+    {
+      "protocolo": "carga não vista",
+      "método": "Regra de envelope (física)",
+      "conjunto": "—",
+      "acurácia": 0.55,
+      "macro-F1": 0.4824675324675325,
+      "gravações": 40
+    },
+    {
+      "protocolo": "carga não vista",
+      "método": "Random Forest (voto das janelas)",
+      "conjunto": "A: estatísticos + espectro (com amplitude)",
+      "acurácia": 0.925,
+      "macro-F1": 0.9386253842775583,
+      "gravações": 40
+    },
+    {
+      "protocolo": "carga não vista",
+      "método": "SVM RBF (voto das janelas)",
+      "conjunto": "A: estatísticos + espectro (com amplitude)",
+      "acurácia": 0.925,
+      "macro-F1": 0.937391304347826,
+      "gravações": 40
+    },
+    {
+      "protocolo": "carga não vista",
+      "método": "Random Forest (voto das janelas)",
+      "conjunto": "B: adimensionais + envelope",
+      "acurácia": 0.925,
+      "macro-F1": 0.9386253842775583,
+      "gravações": 40
+    },
+    {
+      "protocolo": "carga não vista",
+      "método": "SVM RBF (voto das janelas)",
+      "conjunto": "B: adimensionais + envelope",
+      "acurácia": 0.9,
+      "macro-F1": 0.9180602006688963,
+      "gravações": 40
+    },
+    {
+      "protocolo": "carga não vista",
+      "método": "Baseline majoritário (voto das janelas)",
+      "conjunto": "B: adimensionais + envelope",
+      "acurácia": 0.3,
+      "macro-F1": 0.11538461538461539,
+      "gravações": 40
+    },
+    {
+      "protocolo": "carga não vista",
+      "método": "Random Forest (voto das janelas)",
+      "conjunto": "C: somente envelope",
+      "acurácia": 0.85,
+      "macro-F1": 0.816403162055336,
+      "gravações": 40
+    },
+    {
+      "protocolo": "carga não vista",
+      "método": "SVM RBF (voto das janelas)",
+      "conjunto": "C: somente envelope",
+      "acurácia": 0.85,
+      "macro-F1": 0.8111001317523057,
+      "gravações": 40
+    },
+    {
+      "protocolo": "diâmetro não visto",
+      "método": "Regra de envelope (física)",
+      "conjunto": "—",
+      "acurácia": 0.6944444444444444,
+      "macro-F1": 0.6810872497147007,
+      "gravações": 36
+    },
+    {
+      "protocolo": "diâmetro não visto",
+      "método": "Random Forest (voto das janelas)",
+      "conjunto": "A: estatísticos + espectro (com amplitude)",
+      "acurácia": 0.25,
+      "macro-F1": 0.2110016420361248,
+      "gravações": 36
+    },
+    {
+      "protocolo": "diâmetro não visto",
+      "método": "SVM RBF (voto das janelas)",
+      "conjunto": "A: estatísticos + espectro (com amplitude)",
+      "acurácia": 0.2222222222222222,
+      "macro-F1": 0.18209876543209877,
+      "gravações": 36
+    },
+    {
+      "protocolo": "diâmetro não visto",
+      "método": "Random Forest (voto das janelas)",
+      "conjunto": "B: adimensionais + envelope",
+      "acurácia": 0.2222222222222222,
+      "macro-F1": 0.18412698412698414,
+      "gravações": 36
+    },
+    {
+      "protocolo": "diâmetro não visto",
+      "método": "SVM RBF (voto das janelas)",
+      "conjunto": "B: adimensionais + envelope",
+      "acurácia": 0.1111111111111111,
+      "macro-F1": 0.08333333333333333,
+      "gravações": 36
+    },
+    {
+      "protocolo": "diâmetro não visto",
+      "método": "Random Forest (voto das janelas)",
+      "conjunto": "C: somente envelope",
+      "acurácia": 0.5555555555555556,
+      "macro-F1": 0.4691666666666667,
+      "gravações": 36
+    },
+    {
+      "protocolo": "diâmetro não visto",
+      "método": "SVM RBF (voto das janelas)",
+      "conjunto": "C: somente envelope",
+      "acurácia": 0.6388888888888888,
+      "macro-F1": 0.6182716049382716,
+      "gravações": 36
+    }
+  ],
+  "diagnostico_carga": [
+    {
+      "conjunto": "A: estatísticos + espectro (com amplitude)",
+      "modelo": "Random Forest",
+      "acurácia": 0.9537688442211055,
+      "macro-F1 (média dobras)": 0.9457163966136999,
+      "macro-F1 (desvio)": 0.05800381054839835,
+      "macro-F1 (pior dobra)": 0.8487665112665113,
+      "acurácia por gravação (voto)": 0.925,
+      "recall Normal": 1.0,
+      "recall Pista interna": 0.9545454545454546,
+      "recall Esfera": 0.9572368421052632,
+      "recall Pista externa": 0.9342105263157895
+    },
+    {
+      "conjunto": "A: estatísticos + espectro (com amplitude)",
+      "modelo": "SVM RBF",
+      "acurácia": 0.9396984924623115,
+      "macro-F1 (média dobras)": 0.9410745354350132,
+      "macro-F1 (desvio)": 0.04065254693688215,
+      "macro-F1 (pior dobra)": 0.8937081161578556,
+      "acurácia por gravação (voto)": 0.925,
+      "recall Normal": 1.0,
+      "recall Pista interna": 0.8811188811188811,
+      "recall Esfera": 0.9506578947368421,
+      "recall Pista externa": 0.9638157894736842
+    },
+    {
+      "conjunto": "B: adimensionais + envelope",
+      "modelo": "Random Forest",
+      "acurácia": 0.9678391959798995,
+      "macro-F1 (média dobras)": 0.952419435355499,
+      "macro-F1 (desvio)": 0.07252311906590794,
+      "macro-F1 (pior dobra)": 0.8268550368550368,
+      "acurácia por gravação (voto)": 0.925,
+      "recall Normal": 1.0,
+      "recall Pista interna": 0.9545454545454546,
+      "recall Esfera": 0.9901315789473685,
+      "recall Pista externa": 0.9473684210526315
+    },
+    {
+      "conjunto": "B: adimensionais + envelope",
+      "modelo": "SVM RBF",
+      "acurácia": 0.9326633165829146,
+      "macro-F1 (média dobras)": 0.930161624971388,
+      "macro-F1 (desvio)": 0.042056457516670205,
+      "macro-F1 (pior dobra)": 0.8729403095062638,
+      "acurácia por gravação (voto)": 0.9,
+      "recall Normal": 0.9504950495049505,
+      "recall Pista interna": 0.9685314685314685,
+      "recall Esfera": 0.9210526315789473,
+      "recall Pista externa": 0.9046052631578947
+    },
+    {
+      "conjunto": "B: adimensionais + envelope",
+      "modelo": "Baseline majoritário",
+      "acurácia": 0.3055276381909548,
+      "macro-F1 (média dobras)": 0.1178957807536207,
+      "macro-F1 (desvio)": 0.0033596099216915308,
+      "macro-F1 (pior dobra)": 0.11538461538461539,
+      "acurácia por gravação (voto)": 0.3,
+      "recall Normal": 0.0,
+      "recall Pista interna": 0.0,
+      "recall Esfera": 1.0,
+      "recall Pista externa": 0.0
+    },
+    {
+      "conjunto": "C: somente envelope",
+      "modelo": "Random Forest",
+      "acurácia": 0.7778894472361809,
+      "macro-F1 (média dobras)": 0.7270076161990591,
+      "macro-F1 (desvio)": 0.03357470248175015,
+      "macro-F1 (pior dobra)": 0.6840918139831184,
+      "acurácia por gravação (voto)": 0.85,
+      "recall Normal": 0.594059405940594,
+      "recall Pista interna": 0.916083916083916,
+      "recall Esfera": 0.7039473684210527,
+      "recall Pista externa": 0.7828947368421053
+    },
+    {
+      "conjunto": "C: somente envelope",
+      "modelo": "SVM RBF",
+      "acurácia": 0.7949748743718593,
+      "macro-F1 (média dobras)": 0.7489391429481274,
+      "macro-F1 (desvio)": 0.037798193879684236,
+      "macro-F1 (pior dobra)": 0.6871399142493468,
+      "acurácia por gravação (voto)": 0.85,
+      "recall Normal": 0.8514851485148515,
+      "recall Pista interna": 0.9615384615384616,
+      "recall Esfera": 0.6414473684210527,
+      "recall Pista externa": 0.7730263157894737
+    }
+  ],
+  "diagnostico_diametro": [
+    {
+      "conjunto": "A: estatísticos + espectro (com amplitude)",
+      "modelo": "Random Forest",
+      "acurácia": 0.24608501118568232,
+      "macro-F1 (média dobras)": 0.1347135972820407,
+      "macro-F1 (desvio)": 0.05105297288704604,
+      "macro-F1 (pior dobra)": 0.06266692723601068,
+      "acurácia por gravação (voto)": 0.25,
+      "recall Pista interna": 0.0,
+      "recall Esfera": 0.3815789473684211,
+      "recall Pista externa": 0.34210526315789475
+    },
+    {
+      "conjunto": "A: estatísticos + espectro (com amplitude)",
+      "modelo": "SVM RBF",
+      "acurácia": 0.22483221476510068,
+      "macro-F1 (média dobras)": 0.1314958369221935,
+      "macro-F1 (desvio)": 0.09519205201949969,
+      "macro-F1 (pior dobra)": 0.0,
+      "acurácia por gravação (voto)": 0.2222222222222222,
+      "recall Pista interna": 0.0,
+      "recall Esfera": 0.32894736842105265,
+      "recall Pista externa": 0.33223684210526316
+    },
+    {
+      "conjunto": "B: adimensionais + envelope",
+      "modelo": "Random Forest",
+      "acurácia": 0.2203579418344519,
+      "macro-F1 (média dobras)": 0.1181790955375861,
+      "macro-F1 (desvio)": 0.06019901985989746,
+      "macro-F1 (pior dobra)": 0.03333333333333333,
+      "acurácia por gravação (voto)": 0.2222222222222222,
+      "recall Pista interna": 0.0,
+      "recall Esfera": 0.3157894736842105,
+      "recall Pista externa": 0.33223684210526316
+    },
+    {
+      "conjunto": "B: adimensionais + envelope",
+      "modelo": "SVM RBF",
+      "acurácia": 0.1319910514541387,
+      "macro-F1 (média dobras)": 0.07300189973335439,
+      "macro-F1 (desvio)": 0.06938973744858198,
+      "macro-F1 (pior dobra)": 0.01932367149758454,
+      "acurácia por gravação (voto)": 0.1111111111111111,
+      "recall Pista interna": 0.0,
+      "recall Esfera": 0.34539473684210525,
+      "recall Pista externa": 0.04276315789473684
+    },
+    {
+      "conjunto": "C: somente envelope",
+      "modelo": "Random Forest",
+      "acurácia": 0.4753914988814318,
+      "macro-F1 (média dobras)": 0.4117254908182042,
+      "macro-F1 (desvio)": 0.05761909005891592,
+      "macro-F1 (pior dobra)": 0.3320243283367655,
+      "acurácia por gravação (voto)": 0.5555555555555556,
+      "recall Pista interna": 0.8601398601398601,
+      "recall Esfera": 0.5888157894736842,
+      "recall Pista externa": 0.0
+    },
+    {
+      "conjunto": "C: somente envelope",
+      "modelo": "SVM RBF",
+      "acurácia": 0.6062639821029083,
+      "macro-F1 (média dobras)": 0.5584470823167414,
+      "macro-F1 (desvio)": 0.12053481606331305,
+      "macro-F1 (pior dobra)": 0.46542460400530317,
+      "acurácia por gravação (voto)": 0.6388888888888888,
+      "recall Pista interna": 0.8846153846153846,
+      "recall Esfera": 0.6151315789473685,
+      "recall Pista externa": 0.3355263157894737
+    }
+  ]
 }

@@ -20,7 +20,7 @@ classificadores e uma regra física baseada em análise de envelope. Os modelos 
 | Dados empregados (40 arquivos MAT originais) | [`dados/raw/`](dados/raw/) · [`dados/manifesto.csv`](dados/manifesto.csv) |
 | Tabela resumo de resultados | [abaixo](#tabela-resumo-de-resultados) · [`resultados/tabela_resumo.csv`](resultados/tabela_resumo.csv) |
 | Matrizes de confusão completas | [Anexo A do relatório](RELATORIO.md#anexo-a--matrizes-de-confusão-completas) · `resultados/matriz_*.csv` |
-| Slides da apresentação (usados no vídeo) | [`APRESENTACAO.html`](APRESENTACAO.html) — abra no navegador; versão em [PowerPoint](APRESENTACAO.pptx) e [PDF](APRESENTACAO.pdf) |
+| Slides da apresentação (usados no vídeo) | [`APRESENTACAO.html`](APRESENTACAO.html) — 15 slides narrados + 4 de apêndice, abra no navegador; versão em [PowerPoint](APRESENTACAO.pptx) e [PDF](APRESENTACAO.pdf) |
 | Vídeo da apresentação (até 5 min) | **YouTube:** _link do vídeo_ |
 | Roteiro com as falas dos 5 integrantes | [`ROTEIRO_APRESENTACAO.md`](ROTEIRO_APRESENTACAO.md) |
 | Referências bibliográficas | [`REFERENCIAS.md`](REFERENCIAS.md) |

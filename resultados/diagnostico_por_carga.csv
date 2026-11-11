@@ -1,0 +1,3 @@
+conjunto,modelo,macro-F1 teste 0 HP,macro-F1 teste 1 HP,macro-F1 teste 2 HP,macro-F1 teste 3 HP
+B: adimensionais + envelope,Random Forest,0.8268550368550368,0.9971263418662262,0.9913787375415282,0.9943176251592045
+B: adimensionais + envelope,SVM RBF,0.8729403095062638,0.9329311211664153,0.9233983222607468,0.9913767469521261

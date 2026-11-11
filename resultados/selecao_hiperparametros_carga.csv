@@ -1,17 +1,9 @@
 conjunto,modelo,dobra,parametro,macro_f1_validacao_interna
-B: adimensionais + envelope,Random Forest,0,folha=1,0.9933145455187214
-B: adimensionais + envelope,SVM RBF,0,C=10,0.945957737974101
-C: somente envelope,Random Forest,0,folha=5,0.7390976241496672
-C: somente envelope,SVM RBF,0,C=10,0.7789506124081994
-B: adimensionais + envelope,Random Forest,1,folha=1,0.9194612887839698
-B: adimensionais + envelope,SVM RBF,1,C=100,0.8518355561791376
-C: somente envelope,Random Forest,1,folha=1,0.6744357236523798
-C: somente envelope,SVM RBF,1,C=10,0.7227306692942669
-B: adimensionais + envelope,Random Forest,2,folha=1,0.9367861435157966
-B: adimensionais + envelope,SVM RBF,2,C=100,0.919568081329965
-C: somente envelope,Random Forest,2,folha=1,0.6896319068825146
-C: somente envelope,SVM RBF,2,C=10,0.7110390041916426
-B: adimensionais + envelope,Random Forest,3,folha=1,0.9399581750366556
-B: adimensionais + envelope,SVM RBF,3,C=100,0.9813789293350755
-C: somente envelope,Random Forest,3,folha=1,0.6926247192152607
-C: somente envelope,SVM RBF,3,C=10,0.7230705997853809
+B: adimensionais + envelope,Random Forest,0,{'min_samples_leaf': 1},0.9933145455187214
+B: adimensionais + envelope,SVM RBF,0,{'svc__C': 10},0.945957737974101
+B: adimensionais + envelope,Random Forest,1,{'min_samples_leaf': 1},0.9194612887839698
+B: adimensionais + envelope,SVM RBF,1,{'svc__C': 100},0.8518355561791376
+B: adimensionais + envelope,Random Forest,2,{'min_samples_leaf': 1},0.9367861435157966
+B: adimensionais + envelope,SVM RBF,2,{'svc__C': 100},0.919568081329965
+B: adimensionais + envelope,Random Forest,3,{'min_samples_leaf': 1},0.9399581750366556
+B: adimensionais + envelope,SVM RBF,3,{'svc__C': 100},0.9813789293350755

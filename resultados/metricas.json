@@ -77,22 +77,6 @@
       "gravações": 40
     },
     {
-      "protocolo": "carga não vista",
-      "método": "Random Forest (voto das janelas)",
-      "conjunto": "C: somente envelope",
-      "acurácia": 0.85,
-      "macro-F1": 0.816403162055336,
-      "gravações": 40
-    },
-    {
-      "protocolo": "carga não vista",
-      "método": "SVM RBF (voto das janelas)",
-      "conjunto": "C: somente envelope",
-      "acurácia": 0.85,
-      "macro-F1": 0.8111001317523057,
-      "gravações": 40
-    },
-    {
       "protocolo": "diâmetro não visto",
       "método": "Regra de envelope (física)",
       "conjunto": "—",
@@ -159,32 +143,6 @@
       "recall Pista interna": 0.9685314685314685,
       "recall Esfera": 0.9210526315789473,
       "recall Pista externa": 0.9046052631578947
-    },
-    {
-      "conjunto": "C: somente envelope",
-      "modelo": "Random Forest",
-      "acurácia": 0.7778894472361809,
-      "macro-F1 (média dobras)": 0.7270076161990591,
-      "macro-F1 (desvio)": 0.03357470248175015,
-      "macro-F1 (pior dobra)": 0.6840918139831184,
-      "acurácia por gravação (voto)": 0.85,
-      "recall Normal": 0.594059405940594,
-      "recall Pista interna": 0.916083916083916,
-      "recall Esfera": 0.7039473684210527,
-      "recall Pista externa": 0.7828947368421053
-    },
-    {
-      "conjunto": "C: somente envelope",
-      "modelo": "SVM RBF",
-      "acurácia": 0.7949748743718593,
-      "macro-F1 (média dobras)": 0.7489391429481274,
-      "macro-F1 (desvio)": 0.037798193879684236,
-      "macro-F1 (pior dobra)": 0.6871399142493468,
-      "acurácia por gravação (voto)": 0.85,
-      "recall Normal": 0.8514851485148515,
-      "recall Pista interna": 0.9615384615384616,
-      "recall Esfera": 0.6414473684210527,
-      "recall Pista externa": 0.7730263157894737
     }
   ],
   "diagnostico_diametro": [

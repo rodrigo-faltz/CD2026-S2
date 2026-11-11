@@ -1,13 +1,13 @@
 conjunto,modelo,dobra,parametro,macro_f1_validacao_interna
-B: adimensionais + envelope,Random Forest,0.007,folha=1,0.21331674230224956
-B: adimensionais + envelope,SVM RBF,0.007,C=0.1,0.2660670557249482
-C: somente envelope,Random Forest,0.007,folha=5,0.4275662129056235
-C: somente envelope,SVM RBF,0.007,C=100,0.423249601858375
-B: adimensionais + envelope,Random Forest,0.014,folha=10,0.41479364756633774
-B: adimensionais + envelope,SVM RBF,0.014,C=1,0.16646090534979424
-C: somente envelope,Random Forest,0.014,folha=5,0.47808852990746337
-C: somente envelope,SVM RBF,0.014,C=10,0.4603309847338923
-B: adimensionais + envelope,Random Forest,0.021,folha=1,0.1399905560400584
-B: adimensionais + envelope,SVM RBF,0.021,C=1,0.06797020484171322
-C: somente envelope,Random Forest,0.021,folha=1,0.23439266157624267
-C: somente envelope,SVM RBF,0.021,C=100,0.2622897030505726
+B: adimensionais + envelope,Random Forest,0.007,{'min_samples_leaf': 1},0.21331674230224956
+B: adimensionais + envelope,SVM RBF,0.007,{'svc__C': 0.1},0.2660670557249482
+C: somente envelope,Random Forest,0.007,{'min_samples_leaf': 5},0.4275662129056235
+C: somente envelope,SVM RBF,0.007,{'svc__C': 100},0.423249601858375
+B: adimensionais + envelope,Random Forest,0.014,{'min_samples_leaf': 10},0.41479364756633774
+B: adimensionais + envelope,SVM RBF,0.014,{'svc__C': 1},0.16646090534979424
+C: somente envelope,Random Forest,0.014,{'min_samples_leaf': 5},0.47808852990746337
+C: somente envelope,SVM RBF,0.014,{'svc__C': 10},0.4603309847338923
+B: adimensionais + envelope,Random Forest,0.021,{'min_samples_leaf': 1},0.1399905560400584
+B: adimensionais + envelope,SVM RBF,0.021,{'svc__C': 1},0.06797020484171322
+C: somente envelope,Random Forest,0.021,{'min_samples_leaf': 1},0.23439266157624267
+C: somente envelope,SVM RBF,0.021,{'svc__C': 100},0.2622897030505726

@@ -22,8 +22,8 @@ Três resultados resumem o trabalho:
    Forest (TPR 80,8%, FPR 8,9%). Com uma referência normal em cada carga, a distância de Mahalanobis detecta 100% das
    falhas sem falsos alarmes.
 2. **Diagnóstico com carga não vista:** Random Forest acerta 96,8% das janelas (macro-F1 médio de 0,95) e 92,5% das
-   gravações.
-3. **Diagnóstico com diâmetro não visto:** os mesmos modelos caem **abaixo do acaso** (macro-F1 ≤ 0,13). Só os atributos
+   gravações. O pior caso é a carga de 0 HP (macro-F1 de 0,83).
+3. **Diagnóstico com diâmetro não visto:** os mesmos modelos caem **abaixo do acaso** (macro-F1 de 0,07 a 0,12). Só os atributos
    de envelope generalizam em parte, e a regra física baseada no envelope acerta 69% das gravações. A alta acurácia
    comum no CWRU mede, em grande parte, o reconhecimento de gravações conhecidas — e não do tipo de defeito.
 
@@ -40,8 +40,8 @@ e de diagnóstico do tipo de falha, comparando alternativas. Formulamos três pe
 - **Generalização:** os modelos funcionam numa **carga** que não viram? E num **diâmetro de defeito** que não viram?
 
 A terceira pergunta foi motivada pela literatura: Smith & Randall [6] mostram que vários registros do CWRU não exibem
-sintomas claros de falha, e Hendriks et al. [28] mostram que a forma de dividir os dados do CWRU infla a acurácia
-reportada em muitos trabalhos — um caso de vazamento de informação [29].
+sintomas claros de falha, e Hendriks et al. [23] mostram que a forma de dividir os dados do CWRU infla a acurácia
+reportada em muitos trabalhos — um caso de vazamento de informação [24].
 
 ## 2. Dataset
 
@@ -110,26 +110,23 @@ de pista externa ou de esfera?
 
 RMS, curtose, fatores de crista e impulso medem amplitude e impulsividade, que crescem com defeitos [7]. A densidade
 espectral estimada pelo método de Welch [12] resume como a energia se distribui em frequência. São os atributos mais usados
-em diagnóstico por aprendizado de máquina [26, 27], mas não carregam conhecimento sobre a geometria do rolamento.
+em diagnóstico por aprendizado de máquina [21, 22], mas não carregam conhecimento sobre a geometria do rolamento.
 
 ### 3.3 Detectores de anomalia
 
 | Técnica | Por que faz sentido para o problema | Referências |
 |---|---|---|
 | **Curtose do envelope** | Indicador de saúde clássico: defeitos tornam o sinal impulsivo. Não aprende nada além do limiar. | [9, 10] |
-| **Distância de Mahalanobis** | Mede o afastamento da nuvem normal considerando as correlações entre atributos. A covariância de Ledoit-Wolf estabiliza a estimativa com poucas amostras normais (35 a 87 janelas por dobra). | [19, 20] |
+| **Distância de Mahalanobis** | Mede o afastamento da nuvem normal considerando as correlações entre atributos. A covariância de Ledoit-Wolf estabiliza a estimativa com poucas amostras normais (35 a 87 janelas por dobra). | [16, 17] |
 | **Isolation Forest** | Isola pontos raros com poucos cortes aleatórios. Não supõe forma de distribuição e já foi aplicado à detecção de anomalias em sinais de rolamentos. | [13, 14, 15] |
-| **One-Class SVM** | Estima a fronteira da região normal com kernel RBF. Foi aplicado à detecção de falhas em máquinas com treino só na condição normal. | [16, 17, 18] |
-| **Autoencoder** | Aprende a comprimir e reconstruir o normal; falhas, nunca vistas, reconstroem mal. Redes profundas são uma tendência no diagnóstico de máquinas rotativas. | [21, 22, 30] |
 
 ### 3.4 Classificadores de diagnóstico
 
 | Técnica | Por que faz sentido para o problema | Referências |
 |---|---|---|
-| **Random Forest** | Combina árvores com aleatoriedade, captura interações não lineares entre atributos heterogêneos e é robusta a atributos irrelevantes. Foi proposta e avaliada especificamente para diagnóstico de falhas em máquinas. | [23, 24] |
-| **SVM com kernel RBF** | Separa classes por margem máxima e funciona bem com poucos milhares de exemplos. É uma das técnicas mais estudadas em diagnóstico de falhas de máquinas. | [25, 26] |
+| **Random Forest** | Combina árvores com aleatoriedade, captura interações não lineares entre atributos heterogêneos e é robusta a atributos irrelevantes. Foi proposta e avaliada especificamente para diagnóstico de falhas em máquinas. | [18, 19] |
+| **SVM com kernel RBF** | Separa classes por margem máxima e funciona bem com poucos milhares de exemplos. É uma das técnicas mais estudadas em diagnóstico de falhas de máquinas. | [20, 21] |
 | **Regra de envelope** | Diagnóstico físico sem aprendizado de fronteiras: vence o defeito cujo indicador é maior. É a referência do benchmark do CWRU. | [6, 7] |
-| **Baseline majoritário** | Sempre prediz a classe mais frequente. Mostra quanto de cada métrica vem só do desequilíbrio de classes. | — |
 
 ## 4. Metodologia
 
@@ -161,14 +158,19 @@ A faixa de busca foi limitada a 12 kHz depois de observar que, sem esse limite, 
 entre 21,5 e 23 kHz — perto da metade da taxa de amostragem —, inclusive nos sinais normais. É um efeito do sistema de
 aquisição, e não do defeito. A observação não usou rótulos.
 
-Três conjuntos de atributos foram definidos antes de qualquer avaliação:
+Dois conjuntos de atributos foram definidos antes de qualquer avaliação:
 
-- **A — estatísticos + espectro, com amplitude** (19 atributos): a abordagem estatística genérica.
-- **B — adimensionais + envelope** (21 atributos, **conjunto principal**): sem amplitude, que varia com a carga, e com a
-  física do rolamento.
-- **C — somente envelope** (4 atributos).
+- **B — adimensionais + envelope** (21 atributos, **conjunto principal**): forma de onda, espectro e envelope. A amplitude
+  fica de fora porque varia com a carga e com o ganho do sensor; ela é calculada só para a figura exploratória.
+- **C — somente envelope** (4 atributos): usado no protocolo de diâmetro não visto, para testar se a física do rolamento,
+  sozinha, generaliza para um defeito de tamanho novo.
 
 ### 4.3 Protocolos de avaliação
+
+**Por que não usar um sorteio de janelas.** A divisão usual das aulas, `train_test_split` com sorteio de linhas, coloca
+janelas da mesma gravação no treino e no teste. No notebook (seção 5), esse sorteio deixa as 40 gravações dos dois lados
+e dá 99,3% de acurácia à Random Forest, contra 85,5% quando a carga de 0 HP inteira fica no teste. Por isso toda divisão
+é feita por gravação, com o `LeaveOneGroupOut` do scikit-learn (cada grupo vira teste uma vez).
 
 **Protocolo 1 — carga não vista.** Validação cruzada com 4 dobras: treino com três cargas e teste na quarta. Cada
 gravação é testada exatamente uma vez.
@@ -178,18 +180,19 @@ cargas) e teste no terceiro. Mede se o modelo reconhece o tipo de defeito numa s
 
 **Detecção.** No protocolo 1, cada detector é ajustado só com as janelas normais das três cargas de treino. O limiar é o
 percentil 99 de escores de normais *fora da amostra*: dentro do treino, cada carga normal é pontuada por um detector
-ajustado nas outras duas. Assim o limiar já incorpora uma mudança de carga, sem olhar o teste. Também se avalia a decisão
-por gravação (alarme se a mediana dos escores da gravação passar do limiar).
+ajustado nas outras duas. Assim o limiar já incorpora uma mudança de carga, sem olhar o teste.
 
-**Detecção com referência por carga.** Para separar o problema da detecção do problema da calibração, cada gravação
-normal é dividida em três trechos contíguos no tempo: o primeiro ajusta o detector (35 janelas no total), o segundo
-calibra o limiar (35) e o terceiro é usado como teste (31), junto com todas as janelas de falha. Esse cenário é otimista
-quanto ao FPR, porque o normal de teste vem da mesma gravação do treino.
+**Detecção com referência por carga (treino, validação e teste).** Para separar o problema da detecção do problema da
+calibração, cada gravação normal é dividida em três trechos contíguos no tempo, como na divisão treino/validação/teste das
+aulas: o primeiro ajusta o detector (35 janelas no total), o segundo escolhe o limiar (35) e o terceiro é usado como teste
+(31), junto com todas as janelas de falha. Esse cenário é otimista quanto ao FPR, porque o normal de teste vem da mesma
+gravação do treino.
 
 **Seleção de hiperparâmetros.** Em cada dobra externa, Random Forest (folha mínima ∈ {1, 5, 10}, 300 árvores, pesos
 balanceados) e SVM (C ∈ {0,1; 1; 10; 100}, `gamma='scale'`, padronização ajustada no treino, pesos balanceados) são
-escolhidos por macro-F1 numa validação cruzada **interna** com os mesmos grupos (cargas ou diâmetros do treino). O teste
-da dobra externa é usado uma única vez. No conjunto B e carga não vista, a Random Forest escolheu folha 1 nas quatro
+escolhidos com `GridSearchCV(cv=LeaveOneGroupOut(), scoring='f1_macro')`, no mesmo formato do laço de seleção de
+modelos das aulas (`base_estimators`, `param_grids`). A validação cruzada **interna** usa os mesmos grupos (cargas ou
+diâmetros do treino), e o teste da dobra externa é usado uma única vez. No conjunto B e carga não vista, a Random Forest escolheu folha 1 nas quatro
 dobras, e a SVM escolheu C = 10 em uma e C = 100 em três.
 
 **Regra de envelope.** Calculada sobre o envelope da gravação inteira. No protocolo 1, uma gravação é Normal se seu maior
@@ -198,8 +201,8 @@ protocolo 2, sem normais, vence sempre o maior indicador.
 
 ### 4.4 Métricas
 
-- **Detecção:** TPR = TP/(TP+FN) e FPR = FP/(FP+TN), com qualquer falha como positivo; ROC-AUC e precisão média (AP)
-  calculadas em cada dobra e promediadas.
+- **Detecção:** TPR = TP/(TP+FN) e FPR = FP/(FP+TN), com qualquer falha como positivo; ROC-AUC calculada em cada dobra
+  e promediada. A curva ROC do cenário com referência por carga marca o ponto (FPR, TPR) do limiar escolhido.
 - **Diagnóstico:** acurácia, macro-F1 (média do F1 das classes, que não é dominada pelas classes maiores), recall por
   classe e matriz de confusão. Para preencher a tabela do enunciado, TPR e FPR dos classificadores tratam como alarme
   qualquer predição diferente de Normal, e a "acurácia por classe" é o recall da classe.
@@ -215,69 +218,66 @@ correlacionadas, e há apenas quatro gravações normais.
 
 Protocolo 1 (carga não vista), conjunto B, 4 dobras somadas. Métricas por janela, exceto a regra de envelope (por
 gravação). N = normal, PI = pista interna, E = esfera, PE = pista externa. "Tipo de falha identificada" lista as classes
-com recall ≥ 0,5.
+com recall ≥ 0,5; "acurácia por classe" é o recall. A tabela é copiada de `resultados/tabela_resumo.md`, gerada pelo
+notebook.
 
-| Dataset | Técnica | Tipo de falha identificada | Taxa de detecção (TPR) | Falso positivo (FPR) | Acurácia por classe (recall) |
-|:--|:--|:--|--:|--:|:--|
-| CWRU 48 kHz DE | Curtose do envelope — detecção | não se aplica | 0,6790 | 0,0297 | não se aplica |
-| CWRU 48 kHz DE | Mahalanobis — detecção | não se aplica | 0,7282 | 0,1386 | não se aplica |
-| CWRU 48 kHz DE | Isolation Forest — detecção | não se aplica | 0,8076 | 0,0891 | não se aplica |
-| CWRU 48 kHz DE | One-Class SVM — detecção | não se aplica | 0,5593 | 0,1386 | não se aplica |
-| CWRU 48 kHz DE | Autoencoder — detecção | não se aplica | 0,7192 | 0,1386 | não se aplica |
-| CWRU 48 kHz DE | Random Forest — diagnóstico | Pista interna; Esfera; Pista externa | 0,9989 | 0,0000 | N: 1,00; PI: 0,95; E: 0,99; PE: 0,95 |
-| CWRU 48 kHz DE | SVM RBF — diagnóstico | Pista interna; Esfera; Pista externa | 1,0000 | 0,0495 | N: 0,95; PI: 0,97; E: 0,92; PE: 0,90 |
-| CWRU 48 kHz DE | Baseline majoritário — diagnóstico | Esfera | 1,0000 | 1,0000 | N: 0,00; PI: 0,00; E: 1,00; PE: 0,00 |
-| CWRU 48 kHz DE | Regra de envelope — diagnóstico, por gravação | Pista interna; Pista externa | 0,5833 | 0,2500 | N: 0,75; PI: 0,83; E: 0,00; PE: 0,75 |
+| Dataset        | Técnica                                                | Tipo de falha identificada           |   Taxa de detecção (TPR) |   Falso positivo (FPR) | Acurácia por classe (se houver diagnóstico)   |
+|:---------------|:-------------------------------------------------------|:-------------------------------------|-------------------------:|-----------------------:|:----------------------------------------------|
+| CWRU 48 kHz DE | Curtose do envelope (indicador) — detecção, por janela | não se aplica                        |                   0.6790 |                 0.0297 | não se aplica                                 |
+| CWRU 48 kHz DE | Mahalanobis — detecção, por janela                     | não se aplica                        |                   0.7282 |                 0.1386 | não se aplica                                 |
+| CWRU 48 kHz DE | Isolation Forest — detecção, por janela                | não se aplica                        |                   0.8076 |                 0.0891 | não se aplica                                 |
+| CWRU 48 kHz DE | Random Forest — diagnóstico, por janela                | Pista interna; Esfera; Pista externa |                   0.9989 |                 0.0000 | N: 1.00; PI: 0.95; E: 0.99; PE: 0.95          |
+| CWRU 48 kHz DE | SVM RBF — diagnóstico, por janela                      | Pista interna; Esfera; Pista externa |                   1.0000 |                 0.0495 | N: 0.95; PI: 0.97; E: 0.92; PE: 0.90          |
+| CWRU 48 kHz DE | Regra de envelope — diagnóstico, por gravação          | Pista interna; Pista externa         |                   0.5833 |                 0.2500 | N: 0.75; PI: 0.83; E: 0.00; PE: 0.75          |
 
 As matrizes de confusão completas estão no Anexo A.
 
 ### 5.2 Detecção
 
+**Referência normal em cada carga (treino, validação e teste).**
+
+| Detector | TPR | FPR | ROC-AUC |
+|---|---:|---:|---:|
+| Curtose do envelope | 0,700 | 0,032 | 0,810 |
+| Mahalanobis | **1,000** | **0,000** | 1,000 |
+| Isolation Forest | 0,726 | 0,032 | 0,973 |
+
+FPR de 0,032 corresponde a 1 das 31 janelas normais de teste. Na curva ROC, o ponto de cada detector mostra o TPR e o FPR
+do limiar escolhido na validação (percentil 99).
+
+![Curva ROC com o ponto do limiar](resultados/deteccao_roc.png)
+
 **Carga não vista (protocolo 1).**
 
-| Detector | TPR | FPR | ROC-AUC | AP | TPR gravação | Normais com alarme | FPR em 0 HP | FPR em 1–3 HP |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| Curtose do envelope | 0,679 | 0,030 | 0,829 | 0,980 | 0,667 | 0/4 | 0,000 | 0,000–0,069 |
-| Mahalanobis | 0,728 | 0,139 | 1,000 | 1,000 | 0,778 | 1/4 | 1,000 | 0,000 |
-| Isolation Forest | 0,808 | 0,089 | 0,975 | 0,997 | 0,806 | 1/4 | 0,643 | 0,000 |
-| One-Class SVM | 0,559 | 0,139 | 1,000 | 1,000 | 0,639 | 1/4 | 1,000 | 0,000 |
-| Autoencoder | 0,719 | 0,139 | 1,000 | 1,000 | 0,778 | 1/4 | 1,000 | 0,000 |
+| Detector | TPR | FPR | ROC-AUC (média das dobras) | FPR em 0 HP | FPR em 1–3 HP |
+|---|---:|---:|---:|---:|---:|
+| Curtose do envelope | 0,679 | 0,030 | 0,829 | 0,000 | 0,000–0,069 |
+| Mahalanobis | 0,728 | 0,139 | 1,000 | 1,000 | 0,000 |
+| Isolation Forest | 0,808 | 0,089 | 0,975 | 0,643 | 0,000 |
 
-![Curva ROC e FPR por carga](resultados/deteccao_roc_fpr.png)
-
-**Referência normal em cada carga.**
-
-| Detector | TPR | FPR | ROC-AUC | AP |
-|---|---:|---:|---:|---:|
-| Curtose do envelope | 0,700 | 0,032 | 0,810 | 0,993 |
-| Mahalanobis | **1,000** | **0,000** | 1,000 | 1,000 |
-| Isolation Forest | 0,726 | 0,032 | 0,973 | 0,999 |
-| One-Class SVM | 1,000 | 0,032 | 1,000 | 1,000 |
-| Autoencoder | 1,000 | 0,032 | 1,000 | 1,000 |
-
-FPR de 0,032 corresponde a 1 das 31 janelas normais de teste.
+![FPR por carga nova](resultados/deteccao_fpr_por_carga.png)
 
 ### 5.3 Diagnóstico — carga não vista
 
 | Conjunto | Modelo | Acurácia | Macro-F1 (média ± desvio) | Pior dobra | Acurácia por gravação |
 |---|---|---:|---:|---:|---:|
-| A — com amplitude | Random Forest | 0,954 | 0,946 ± 0,058 | 0,849 | 0,925 |
-| A — com amplitude | SVM RBF | 0,940 | 0,941 ± 0,041 | 0,894 | 0,925 |
 | **B — adimensionais + envelope** | **Random Forest** | **0,968** | **0,952 ± 0,073** | 0,827 | 0,925 |
 | B — adimensionais + envelope | SVM RBF | 0,933 | 0,930 ± 0,042 | 0,873 | 0,900 |
-| B | Baseline majoritário | 0,306 | 0,118 ± 0,003 | 0,115 | 0,300 |
-| C — somente envelope | Random Forest | 0,778 | 0,727 ± 0,034 | 0,684 | 0,850 |
-| C — somente envelope | SVM RBF | 0,795 | 0,749 ± 0,038 | 0,687 | 0,850 |
 | — | Regra de envelope (por gravação) | — | — | — | 0,550 |
 
-Em todos os modelos de aprendizado de máquina, a pior dobra é a de 0 HP.
+Macro-F1 em cada carga de teste:
+
+| Modelo | 0 HP | 1 HP | 2 HP | 3 HP |
+|---|---:|---:|---:|---:|
+| Random Forest | **0,827** | 0,997 | 0,991 | 0,994 |
+| SVM RBF | **0,873** | 0,933 | 0,923 | 0,991 |
+
+A pior dobra é sempre a de 0 HP. Testar só numa carga, como 3 HP, mostraria 0,99 e esconderia esse pior caso.
 
 ### 5.4 Diagnóstico — diâmetro não visto
 
 | Conjunto | Modelo | Macro-F1 0,007" | Macro-F1 0,014" | Macro-F1 0,021" | Acurácia por gravação |
 |---|---|---:|---:|---:|---:|
-| A | Random Forest | 0,167 | 0,175 | 0,063 | 0,250 |
-| A | SVM RBF | 0,222 | 0,172 | 0,000 | 0,222 |
 | B | Random Forest | 0,167 | 0,155 | 0,033 | 0,222 |
 | B | SVM RBF | 0,029 | 0,171 | 0,019 | 0,111 |
 | C | Random Forest | 0,332 | 0,437 | 0,466 | 0,556 |
@@ -285,8 +285,6 @@ Em todos os modelos de aprendizado de máquina, a pior dobra é a de 0 HP.
 | — | **Regra de envelope** (por gravação) | — | — | — | **0,694** |
 
 Com três classes, um classificador aleatório teria macro-F1 ≈ 0,33.
-
-![Comparação de conjuntos de atributos](resultados/comparacao_conjuntos.png)
 
 ### 5.5 Onde os erros acontecem
 
@@ -297,7 +295,7 @@ Com três classes, um classificador aleatório teria macro-F1 ≈ 0,33.
   de 0,014" (pista interna 174 e 177; pista externa 202, 203 e 204) também ficam abaixo do limiar. O normal de 0 HP
   (97) tem indicador de pista interna alto (log₁₀ = 0,97): quando está no teste, é classificado como pista interna;
   quando está no treino, eleva o limiar de normalidade.
-- **Diâmetro não visto:** Random Forest e SVM com os conjuntos A e B atribuem praticamente todas as gravações do diâmetro
+- **Diâmetro não visto:** Random Forest e SVM com o conjunto B atribuem praticamente todas as gravações do diâmetro
   novo a uma única classe (por exemplo, todas as de 0,014" viram "Esfera").
 
 ## 6. Discussão crítica
@@ -310,8 +308,9 @@ Com três classes, um classificador aleatório teria macro-F1 ≈ 0,33.
 - **Detectores bem calibrados.** Com uma referência normal na mesma carga, Mahalanobis detecta todas as falhas sem falsos
   alarmes. Um método simples basta quando a referência é adequada — o Isolation Forest, mais sofisticado, foi
   pior nesse cenário (TPR de 72,6%).
-- **Diagnóstico com carga nova.** Random Forest e SVM generalizam bem para uma carga não vista (macro-F1 ≥ 0,93). Retirar
-  a amplitude (conjunto B) praticamente não mudou o resultado (diferença de até 0,011 no macro-F1 em relação ao A).
+- **Diagnóstico com carga nova.** Random Forest e SVM generalizam bem para uma carga não vista (macro-F1 médio ≥ 0,93).
+  O desempenho, porém, não é igual em todas as cargas: com 0 HP no teste, a macro-F1 cai para 0,83 (RF) e 0,87 (SVM).
+  Por isso o protocolo testa as quatro cargas, e não só uma.
 
 ### 6.2 O que não funcionou e por quê
 
@@ -324,8 +323,8 @@ Com três classes, um classificador aleatório teria macro-F1 ≈ 0,33.
   e diâmetro corresponde a um rolamento físico, montado e gravado numa sessão, e as gravações de cargas diferentes desse
   mesmo rolamento são muito parecidas. No protocolo de carga, o modelo reconhece *o rolamento* e acerta; no protocolo de
   diâmetro, o rolamento é novo e o modelo não sabe o que distingue os tipos de defeito. Isso é coerente com a discussão
-  de Hendriks et al. [28] sobre como a divisão dos dados do CWRU afeta a acurácia reportada, e com a definição de
-  vazamento de Kapoor & Narayanan [29]. Os atributos de envelope, ligados à cinemática do defeito, são os únicos que
+  de Hendriks et al. [23] sobre como a divisão dos dados do CWRU afeta a acurácia reportada, e com a definição de
+  vazamento de Kapoor & Narayanan [24]. Os atributos de envelope, ligados à cinemática do defeito, são os únicos que
   carregam essa informação para um rolamento novo.
 - **Esfera.** O defeito de esfera gira com a esfera e entra e sai da zona de carga, então os impactos são irregulares e
   o pico em 2×BSF é fraco. No benchmark de Smith & Randall [6], os defeitos de esfera também foram os de diagnóstico
@@ -336,7 +335,7 @@ Com três classes, um classificador aleatório teria macro-F1 ≈ 0,33.
   `resultados/envelope_por_gravacao.csv`), e o arquivo 174 tem só 1,3 s de sinal. Smith & Randall [6] relatam que vários
   registros do CWRU não exibem os sintomas esperados do defeito; não investigamos a causa física neste grupo.
 
-### 6.3 Mudança em relação à versão anterior
+### 6.3 Mudança em relação às versões anteriores
 
 Uma versão anterior deste trabalho usava as falhas da coleção de 12 kHz com os normais reamostrados de 48 para 12 kHz,
 uma única divisão (treino 0–1 HP, validação 2 HP, teste 3 HP) e só atributos estatísticos. Ela chegava a 99% de acurácia
@@ -344,6 +343,12 @@ com a SVM. Abandonamos esse protocolo por dois motivos: a diferença de taxa de 
 aprendida no lugar do defeito, e uma única divisão com uma só gravação normal no teste não permitia avaliar a
 variabilidade. O protocolo atual responde perguntas mais difíceis e mostra que a acurácia alta não equivale a um
 diagnóstico físico.
+
+A versão seguinte comparava também One-Class SVM, autoencoder, um baseline majoritário e um terceiro conjunto de
+atributos (estatísticos + espectro, com amplitude). Na versão final, esses itens foram retirados porque não mudavam
+nenhuma conclusão: One-Class SVM e autoencoder davam o mesmo resultado que Mahalanobis, e o conjunto com amplitude ficava
+empatado com o conjunto B. A seleção de hiperparâmetros passou a usar o `GridSearchCV` no formato visto em aula. As
+predições dos modelos mantidos são idênticas às da versão anterior.
 
 ### 6.4 Limitações
 
@@ -361,9 +366,9 @@ diagnóstico físico.
 - Gravar **mais referências normais por carga**, em sessões diferentes, para calibrar limiares que transfiram entre
   condições — ou usar limiares condicionados à carga medida.
 - Validar **deixando o rolamento inteiro de fora** e em outros datasets com degradação natural (Paderborn, IMS),
-  conforme recomendam Hendriks et al. [28].
+  conforme recomendam Hendriks et al. [23].
 - Implementar o kurtograma rápido completo [11] e a análise cicloestacionária, mais adequada a defeitos de esfera [7].
-- Testar redes convolucionais sobre o sinal bruto ou o espectro de envelope [30], sempre com os protocolos de carga e
+- Testar redes convolucionais sobre o sinal bruto ou o espectro de envelope [25], sempre com os protocolos de carga e
   diâmetro não vistos.
 
 ## 7. Conclusões
@@ -392,7 +397,9 @@ Ferramentas de IA generativa foram usadas como apoio neste trabalho:
 - **ChatGPT/Codex (OpenAI):** primeira versão do código, do relatório e dos slides.
 - **Claude (Anthropic):** revisão da primeira versão contra o enunciado, nova versão do código (coleção de 48 kHz,
   análise de envelope, novos detectores e protocolos de validação), verificação das referências bibliográficas no
-  Crossref e redação desta versão do relatório e dos slides.
+  Crossref e redação desta versão do relatório e dos slides. Na versão final, simplificação do notebook para o formato das
+  aulas (laço com `GridSearchCV`, seção sobre separação de treino e teste, remoção de técnicas que não mudavam as
+  conclusões), com conferência automática de que os números mantidos não mudaram.
 
 Todas as métricas resultam da execução do notebook sobre os dados reais do CWRU. As decisões metodológicas, a
 interpretação dos resultados e o conteúdo entregue são de responsabilidade do grupo.
@@ -414,21 +421,16 @@ interpretação dos resultados e o conteúdo entregue são de responsabilidade d
 13. LIU, F. T.; TING, K. M.; ZHOU, Z.-H. Isolation Forest. In: *IEEE International Conference on Data Mining (ICDM)*, 8., 2008. p. 413–422. https://doi.org/10.1109/ICDM.2008.17
 14. LIU, F. T.; TING, K. M.; ZHOU, Z.-H. Isolation-based anomaly detection. *ACM Transactions on Knowledge Discovery from Data*, v. 6, n. 1, art. 3, 2012. https://doi.org/10.1145/2133360.2133363
 15. WANG, H.; LI, Q.; LIU, Y.; YANG, S. Anomaly data detection of rolling element bearings vibration signal based on parameter optimization Isolation Forest. *Machines*, v. 10, n. 6, art. 459, 2022. https://doi.org/10.3390/machines10060459
-16. SCHÖLKOPF, B.; PLATT, J. C.; SHAWE-TAYLOR, J.; SMOLA, A. J.; WILLIAMSON, R. C. Estimating the support of a high-dimensional distribution. *Neural Computation*, v. 13, n. 7, p. 1443–1471, 2001. https://doi.org/10.1162/089976601750264965
-17. SCHÖLKOPF, B. et al. Support vector method for novelty detection. In: *Advances in Neural Information Processing Systems 12*, p. 582–588, 2000. https://proceedings.neurips.cc/paper/1999/hash/8725fb777f25776ffa9076e44fcfd776-Abstract.html
-18. SHIN, H. J.; EOM, D.-H.; KIM, S.-S. One-class support vector machines — an application in machine fault detection and classification. *Computers & Industrial Engineering*, v. 48, n. 2, p. 395–408, 2005. https://doi.org/10.1016/j.cie.2005.01.009
-19. DE MAESSCHALCK, R.; JOUAN-RIMBAUD, D.; MASSART, D. L. The Mahalanobis distance. *Chemometrics and Intelligent Laboratory Systems*, v. 50, n. 1, p. 1–18, 2000. https://doi.org/10.1016/S0169-7439(99)00047-7
-20. LEDOIT, O.; WOLF, M. A well-conditioned estimator for large-dimensional covariance matrices. *Journal of Multivariate Analysis*, v. 88, n. 2, p. 365–411, 2004. https://doi.org/10.1016/S0047-259X(03)00096-4
-21. HINTON, G. E.; SALAKHUTDINOV, R. R. Reducing the dimensionality of data with neural networks. *Science*, v. 313, n. 5786, p. 504–507, 2006. https://doi.org/10.1126/science.1127647
-22. SAKURADA, M.; YAIRI, T. Anomaly detection using autoencoders with nonlinear dimensionality reduction. In: *Workshop on Machine Learning for Sensory Data Analysis (MLSDA)*, 2., 2014. p. 4–11. https://doi.org/10.1145/2689746.2689747
-23. BREIMAN, L. Random forests. *Machine Learning*, v. 45, p. 5–32, 2001. https://doi.org/10.1023/A:1010933404324
-24. YANG, B.-S.; DI, X.; HAN, T. Random forests classifier for machine fault diagnosis. *Journal of Mechanical Science and Technology*, v. 22, n. 9, p. 1716–1725, 2008. https://doi.org/10.1007/s12206-008-0603-6
-25. CORTES, C.; VAPNIK, V. Support-vector networks. *Machine Learning*, v. 20, p. 273–297, 1995. https://doi.org/10.1007/BF00994018
-26. WIDODO, A.; YANG, B.-S. Support vector machine in machine condition monitoring and fault diagnosis. *Mechanical Systems and Signal Processing*, v. 21, n. 6, p. 2560–2574, 2007. https://doi.org/10.1016/j.ymssp.2006.12.007
-27. LEI, Y. et al. Applications of machine learning to machine fault diagnosis: a review and roadmap. *Mechanical Systems and Signal Processing*, v. 138, art. 106587, 2020. https://doi.org/10.1016/j.ymssp.2019.106587
-28. HENDRIKS, J.; DUMOND, P.; KNOX, D. A. Towards better benchmarking using the CWRU bearing fault dataset. *Mechanical Systems and Signal Processing*, v. 169, art. 108732, 2022. https://doi.org/10.1016/j.ymssp.2021.108732
-29. KAPOOR, S.; NARAYANAN, A. Leakage and the reproducibility crisis in machine-learning-based science. *Patterns*, v. 4, n. 9, art. 100804, 2023. https://doi.org/10.1016/j.patter.2023.100804
-30. JIA, F.; LEI, Y.; LIN, J.; ZHOU, X.; LU, N. Deep neural networks: a promising tool for fault characteristic mining and intelligent diagnosis of rotating machinery with massive data. *Mechanical Systems and Signal Processing*, v. 72–73, p. 303–315, 2016. https://doi.org/10.1016/j.ymssp.2015.10.025
+16. DE MAESSCHALCK, R.; JOUAN-RIMBAUD, D.; MASSART, D. L. The Mahalanobis distance. *Chemometrics and Intelligent Laboratory Systems*, v. 50, n. 1, p. 1–18, 2000. https://doi.org/10.1016/S0169-7439(99)00047-7
+17. LEDOIT, O.; WOLF, M. A well-conditioned estimator for large-dimensional covariance matrices. *Journal of Multivariate Analysis*, v. 88, n. 2, p. 365–411, 2004. https://doi.org/10.1016/S0047-259X(03)00096-4
+18. BREIMAN, L. Random forests. *Machine Learning*, v. 45, p. 5–32, 2001. https://doi.org/10.1023/A:1010933404324
+19. YANG, B.-S.; DI, X.; HAN, T. Random forests classifier for machine fault diagnosis. *Journal of Mechanical Science and Technology*, v. 22, n. 9, p. 1716–1725, 2008. https://doi.org/10.1007/s12206-008-0603-6
+20. CORTES, C.; VAPNIK, V. Support-vector networks. *Machine Learning*, v. 20, p. 273–297, 1995. https://doi.org/10.1007/BF00994018
+21. WIDODO, A.; YANG, B.-S. Support vector machine in machine condition monitoring and fault diagnosis. *Mechanical Systems and Signal Processing*, v. 21, n. 6, p. 2560–2574, 2007. https://doi.org/10.1016/j.ymssp.2006.12.007
+22. LEI, Y. et al. Applications of machine learning to machine fault diagnosis: a review and roadmap. *Mechanical Systems and Signal Processing*, v. 138, art. 106587, 2020. https://doi.org/10.1016/j.ymssp.2019.106587
+23. HENDRIKS, J.; DUMOND, P.; KNOX, D. A. Towards better benchmarking using the CWRU bearing fault dataset. *Mechanical Systems and Signal Processing*, v. 169, art. 108732, 2022. https://doi.org/10.1016/j.ymssp.2021.108732
+24. KAPOOR, S.; NARAYANAN, A. Leakage and the reproducibility crisis in machine-learning-based science. *Patterns*, v. 4, n. 9, art. 100804, 2023. https://doi.org/10.1016/j.patter.2023.100804
+25. JIA, F.; LEI, Y.; LIN, J.; ZHOU, X.; LU, N. Deep neural networks: a promising tool for fault characteristic mining and intelligent diagnosis of rotating machinery with massive data. *Mechanical Systems and Signal Processing*, v. 72–73, p. 303–315, 2016. https://doi.org/10.1016/j.ymssp.2015.10.025
 
 ## Anexo A — Matrizes de confusão completas
 
@@ -453,15 +455,6 @@ Linhas: classe real. Colunas: classe predita. Dobras somadas; cada janela ou gra
 | Pista interna | 0 | 277 | 8 | 1 |
 | Esfera | 0 | 3 | 280 | 21 |
 | Pista externa | 0 | 0 | 29 | 275 |
-
-**Baseline majoritário**
-
-| | Normal | Pista interna | Esfera | Pista externa |
-|---|---:|---:|---:|---:|
-| Normal | 0 | 0 | 101 | 0 |
-| Pista interna | 0 | 0 | 286 | 0 |
-| Esfera | 0 | 0 | 304 | 0 |
-| Pista externa | 0 | 0 | 304 | 0 |
 
 ![Matrizes de confusão por janela, carga não vista](resultados/matrizes_carga.png)
 
@@ -501,3 +494,5 @@ Linhas: classe real. Colunas: classe predita. Dobras somadas; cada janela ou gra
 ![Espectro de envelope por classe](resultados/espectro_envelope.png)
 
 ![Atributos por classe](resultados/atributos_por_classe.png)
+
+![Dobras do LeaveOneGroupOut por carga](resultados/dobras_por_carga.png)

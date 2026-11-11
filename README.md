@@ -7,9 +7,13 @@
 [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rodrigo-faltz/CD2026-S2/blob/main/CWRU_Projeto.ipynb)
 
 Detectamos e diagnosticamos defeitos de rolamento (pista interna, esfera e pista externa) em 40 gravações reais de
-vibração do *Bearing Data Center* da Case Western Reserve University, comparando cinco detectores de anomalia, dois
+vibração do *Bearing Data Center* da Case Western Reserve University, comparando três detectores de anomalia, dois
 classificadores e uma regra física baseada em análise de envelope. Os modelos são avaliados em **cargas** e em
 **diâmetros de defeito** que não viram no treino.
+
+O notebook segue o roteiro das aulas: dados → atributos (tabela X, y) → separação treino/teste → seleção de modelos com
+`GridSearchCV` → `classification_report`, matriz de confusão e curva ROC. Cada seção começa com a pergunta que responde
+e termina com a leitura do resultado; as células só de infraestrutura (download, figuras) aparecem recolhidas no Colab.
 
 ## Sumário de entregas
 
@@ -32,28 +36,27 @@ classificadores e uma regra física baseada em análise de envelope. Os modelos 
 Validação cruzada deixando uma **carga** de fora (4 dobras), conjunto de atributos adimensionais + envelope. Métricas por
 janela somando as dobras, exceto a regra de envelope (por gravação). N = normal, PI = pista interna, E = esfera,
 PE = pista externa. "Tipo de falha identificada" lista as classes com recall ≥ 0,5; "acurácia por classe" é o recall.
+A tabela é copiada de [`resultados/tabela_resumo.md`](resultados/tabela_resumo.md), gerada pelo notebook.
 
-| Dataset | Técnica | Tipo de falha identificada | Taxa de detecção (TPR) | Falso positivo (FPR) | Acurácia por classe (recall) |
-|:--|:--|:--|--:|--:|:--|
-| CWRU 48 kHz DE | Curtose do envelope — detecção | não se aplica | 0,6790 | 0,0297 | não se aplica |
-| CWRU 48 kHz DE | Mahalanobis — detecção | não se aplica | 0,7282 | 0,1386 | não se aplica |
-| CWRU 48 kHz DE | Isolation Forest — detecção | não se aplica | 0,8076 | 0,0891 | não se aplica |
-| CWRU 48 kHz DE | One-Class SVM — detecção | não se aplica | 0,5593 | 0,1386 | não se aplica |
-| CWRU 48 kHz DE | Autoencoder — detecção | não se aplica | 0,7192 | 0,1386 | não se aplica |
-| CWRU 48 kHz DE | Random Forest — diagnóstico | Pista interna; Esfera; Pista externa | 0,9989 | 0,0000 | N: 1,00; PI: 0,95; E: 0,99; PE: 0,95 |
-| CWRU 48 kHz DE | SVM RBF — diagnóstico | Pista interna; Esfera; Pista externa | 1,0000 | 0,0495 | N: 0,95; PI: 0,97; E: 0,92; PE: 0,90 |
-| CWRU 48 kHz DE | Baseline majoritário — diagnóstico | Esfera | 1,0000 | 1,0000 | N: 0,00; PI: 0,00; E: 1,00; PE: 0,00 |
-| CWRU 48 kHz DE | Regra de envelope — diagnóstico, por gravação | Pista interna; Pista externa | 0,5833 | 0,2500 | N: 0,75; PI: 0,83; E: 0,00; PE: 0,75 |
+| Dataset        | Técnica                                                | Tipo de falha identificada           |   Taxa de detecção (TPR) |   Falso positivo (FPR) | Acurácia por classe (se houver diagnóstico)   |
+|:---------------|:-------------------------------------------------------|:-------------------------------------|-------------------------:|-----------------------:|:----------------------------------------------|
+| CWRU 48 kHz DE | Curtose do envelope (indicador) — detecção, por janela | não se aplica                        |                   0.6790 |                 0.0297 | não se aplica                                 |
+| CWRU 48 kHz DE | Mahalanobis — detecção, por janela                     | não se aplica                        |                   0.7282 |                 0.1386 | não se aplica                                 |
+| CWRU 48 kHz DE | Isolation Forest — detecção, por janela                | não se aplica                        |                   0.8076 |                 0.0891 | não se aplica                                 |
+| CWRU 48 kHz DE | Random Forest — diagnóstico, por janela                | Pista interna; Esfera; Pista externa |                   0.9989 |                 0.0000 | N: 1.00; PI: 0.95; E: 0.99; PE: 0.95          |
+| CWRU 48 kHz DE | SVM RBF — diagnóstico, por janela                      | Pista interna; Esfera; Pista externa |                   1.0000 |                 0.0495 | N: 0.95; PI: 0.97; E: 0.92; PE: 0.90          |
+| CWRU 48 kHz DE | Regra de envelope — diagnóstico, por gravação          | Pista interna; Pista externa         |                   0.5833 |                 0.2500 | N: 0.75; PI: 0.83; E: 0.00; PE: 0.75          |
 
 **Principais conclusões**
 
 - **Detecção:** os escores separam normal e falha quase perfeitamente (ROC-AUC de 0,975 a 1,000), mas o limiar não se
   transfere entre cargas com só quatro gravações normais. Com uma referência normal em cada carga, a distância de
   Mahalanobis detecta 100% das falhas sem falsos alarmes.
-- **Diagnóstico com carga nova:** Random Forest acerta 96,8% das janelas e 92,5% das gravações.
+- **Diagnóstico com carga nova:** Random Forest acerta 96,8% das janelas e 92,5% das gravações. O pior caso é a carga de
+  0 HP (macro-F1 de 0,83 contra 0,99 nas outras).
 - **Diagnóstico com diâmetro de defeito novo:** os classificadores com atributos estatísticos caem abaixo do acaso
-  (macro-F1 ≤ 0,13). A regra de envelope, baseada na física do rolamento, acerta 69% das gravações. A acurácia alta
-  com carga nova vem, em boa parte, do reconhecimento de rolamentos já vistos.
+  (macro-F1 de 0,07 a 0,12). A regra de envelope, baseada na física do rolamento, acerta 69% das gravações. A acurácia
+  alta com carga nova vem, em boa parte, do reconhecimento de rolamentos já vistos.
 
 ## Como executar
 
@@ -64,8 +67,7 @@ PE = pista externa. "Tipo de falha identificada" lista as classes com recall ≥
 
 Não é preciso GPU, conta do Kaggle nem upload de arquivos. O notebook baixa os 40 arquivos (≈ 275 MB) da fonte oficial
 do CWRU, confere o SHA-256 de cada um e gera tudo em `resultados/`. A execução leva cerca de 3 a 5 minutos. O Colab já
-traz as bibliotecas necessárias; para usar exatamente as versões da execução de referência, mude `PINAR_VERSOES` para
-`True` na primeira célula.
+traz as bibliotecas necessárias; as versões da execução de referência estão em `requirements.txt`.
 
 ### Localmente
 

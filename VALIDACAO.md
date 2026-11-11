@@ -1,5 +1,22 @@
 # Registro de validação
 
+## Versão final (11 nov. 2026)
+
+Execução em Windows 10, Python 3.12.9, versões de `requirements.txt`, com os dados de `dados/raw/`.
+
+| Verificação | Resultado |
+|---|---|
+| Notebook executado do zero com `jupyter nbconvert --execute` (pasta `resultados/` apagada antes) | Sem erros, 104 s |
+| Números mantidos comparados com a versão anterior (detecção, diagnóstico por carga e por diâmetro, comparação por gravação, tabela resumo e as 5 matrizes de confusão) | **Idênticos** (tolerância 1e-9) |
+| Seleção de hiperparâmetros com `GridSearchCV(cv=LeaveOneGroupOut())` comparada com a validação cruzada manual anterior | Mesmas predições nas 14 combinações de dobra e modelo |
+| Schema do notebook (`nbformat.validate`) | Válido; nenhuma saída de erro |
+| APIs que mudam entre versões do Colab (`include_groups`, `tick_labels`) | Não usadas |
+
+O download pela fonte oficial não foi repetido nesta versão: o código de download e conferência de SHA-256 não mudou.
+A execução no serviço Google Colab ainda deve ser feita por um integrante.
+
+## Versão anterior
+
 Execução em 6 nov. 2026, Windows 11, Python 3.12, versões de `requirements.txt`.
 
 ## Reprodutibilidade

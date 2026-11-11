@@ -9,13 +9,11 @@ A mesma lista está no final do [relatório técnico](RELATORIO.md). Todos os DO
 | Análise de envelope e curtose espectral | [6], [7], [8], [9], [10], [11] |
 | Espectro de Welch | [12] |
 | Isolation Forest | [13], [14], [15] |
-| One-Class SVM | [16], [17], [18] |
-| Distância de Mahalanobis | [19], [20] |
-| Autoencoder | [21], [22], [30] |
-| Random Forest | [23], [24] |
-| SVM | [25], [26] |
-| Aprendizado de máquina em diagnóstico de falhas | [26], [27], [30] |
-| Protocolo de avaliação e vazamento de dados | [28], [29] |
+| Distância de Mahalanobis | [16], [17] |
+| Random Forest | [18], [19] |
+| SVM | [20], [21] |
+| Aprendizado de máquina em diagnóstico de falhas | [21], [22], [25] |
+| Protocolo de avaliação e vazamento de dados | [23], [24] |
 
 1. CWRU BEARING DATA CENTER. *Welcome*. Disponível em: https://engineering.case.edu/bearingdatacenter/welcome. Acesso em: 6 nov. 2026.
 2. CWRU BEARING DATA CENTER. *Apparatus & Procedures*. Disponível em: https://engineering.case.edu/bearingdatacenter/apparatus-and-procedures. Acesso em: 6 nov. 2026.
@@ -32,18 +30,13 @@ A mesma lista está no final do [relatório técnico](RELATORIO.md). Todos os DO
 13. LIU, F. T.; TING, K. M.; ZHOU, Z.-H. Isolation Forest. In: *IEEE International Conference on Data Mining (ICDM)*, 8., 2008. p. 413–422. https://doi.org/10.1109/ICDM.2008.17
 14. LIU, F. T.; TING, K. M.; ZHOU, Z.-H. Isolation-based anomaly detection. *ACM Transactions on Knowledge Discovery from Data*, v. 6, n. 1, art. 3, 2012. https://doi.org/10.1145/2133360.2133363
 15. WANG, H.; LI, Q.; LIU, Y.; YANG, S. Anomaly data detection of rolling element bearings vibration signal based on parameter optimization Isolation Forest. *Machines*, v. 10, n. 6, art. 459, 2022. https://doi.org/10.3390/machines10060459
-16. SCHÖLKOPF, B.; PLATT, J. C.; SHAWE-TAYLOR, J.; SMOLA, A. J.; WILLIAMSON, R. C. Estimating the support of a high-dimensional distribution. *Neural Computation*, v. 13, n. 7, p. 1443–1471, 2001. https://doi.org/10.1162/089976601750264965
-17. SCHÖLKOPF, B. et al. Support vector method for novelty detection. In: *Advances in Neural Information Processing Systems 12*, p. 582–588, 2000. https://proceedings.neurips.cc/paper/1999/hash/8725fb777f25776ffa9076e44fcfd776-Abstract.html
-18. SHIN, H. J.; EOM, D.-H.; KIM, S.-S. One-class support vector machines — an application in machine fault detection and classification. *Computers & Industrial Engineering*, v. 48, n. 2, p. 395–408, 2005. https://doi.org/10.1016/j.cie.2005.01.009
-19. DE MAESSCHALCK, R.; JOUAN-RIMBAUD, D.; MASSART, D. L. The Mahalanobis distance. *Chemometrics and Intelligent Laboratory Systems*, v. 50, n. 1, p. 1–18, 2000. https://doi.org/10.1016/S0169-7439(99)00047-7
-20. LEDOIT, O.; WOLF, M. A well-conditioned estimator for large-dimensional covariance matrices. *Journal of Multivariate Analysis*, v. 88, n. 2, p. 365–411, 2004. https://doi.org/10.1016/S0047-259X(03)00096-4
-21. HINTON, G. E.; SALAKHUTDINOV, R. R. Reducing the dimensionality of data with neural networks. *Science*, v. 313, n. 5786, p. 504–507, 2006. https://doi.org/10.1126/science.1127647
-22. SAKURADA, M.; YAIRI, T. Anomaly detection using autoencoders with nonlinear dimensionality reduction. In: *Workshop on Machine Learning for Sensory Data Analysis (MLSDA)*, 2., 2014. p. 4–11. https://doi.org/10.1145/2689746.2689747
-23. BREIMAN, L. Random forests. *Machine Learning*, v. 45, p. 5–32, 2001. https://doi.org/10.1023/A:1010933404324
-24. YANG, B.-S.; DI, X.; HAN, T. Random forests classifier for machine fault diagnosis. *Journal of Mechanical Science and Technology*, v. 22, n. 9, p. 1716–1725, 2008. https://doi.org/10.1007/s12206-008-0603-6
-25. CORTES, C.; VAPNIK, V. Support-vector networks. *Machine Learning*, v. 20, p. 273–297, 1995. https://doi.org/10.1007/BF00994018
-26. WIDODO, A.; YANG, B.-S. Support vector machine in machine condition monitoring and fault diagnosis. *Mechanical Systems and Signal Processing*, v. 21, n. 6, p. 2560–2574, 2007. https://doi.org/10.1016/j.ymssp.2006.12.007
-27. LEI, Y. et al. Applications of machine learning to machine fault diagnosis: a review and roadmap. *Mechanical Systems and Signal Processing*, v. 138, art. 106587, 2020. https://doi.org/10.1016/j.ymssp.2019.106587
-28. HENDRIKS, J.; DUMOND, P.; KNOX, D. A. Towards better benchmarking using the CWRU bearing fault dataset. *Mechanical Systems and Signal Processing*, v. 169, art. 108732, 2022. https://doi.org/10.1016/j.ymssp.2021.108732
-29. KAPOOR, S.; NARAYANAN, A. Leakage and the reproducibility crisis in machine-learning-based science. *Patterns*, v. 4, n. 9, art. 100804, 2023. https://doi.org/10.1016/j.patter.2023.100804
-30. JIA, F.; LEI, Y.; LIN, J.; ZHOU, X.; LU, N. Deep neural networks: a promising tool for fault characteristic mining and intelligent diagnosis of rotating machinery with massive data. *Mechanical Systems and Signal Processing*, v. 72–73, p. 303–315, 2016. https://doi.org/10.1016/j.ymssp.2015.10.025
+16. DE MAESSCHALCK, R.; JOUAN-RIMBAUD, D.; MASSART, D. L. The Mahalanobis distance. *Chemometrics and Intelligent Laboratory Systems*, v. 50, n. 1, p. 1–18, 2000. https://doi.org/10.1016/S0169-7439(99)00047-7
+17. LEDOIT, O.; WOLF, M. A well-conditioned estimator for large-dimensional covariance matrices. *Journal of Multivariate Analysis*, v. 88, n. 2, p. 365–411, 2004. https://doi.org/10.1016/S0047-259X(03)00096-4
+18. BREIMAN, L. Random forests. *Machine Learning*, v. 45, p. 5–32, 2001. https://doi.org/10.1023/A:1010933404324
+19. YANG, B.-S.; DI, X.; HAN, T. Random forests classifier for machine fault diagnosis. *Journal of Mechanical Science and Technology*, v. 22, n. 9, p. 1716–1725, 2008. https://doi.org/10.1007/s12206-008-0603-6
+20. CORTES, C.; VAPNIK, V. Support-vector networks. *Machine Learning*, v. 20, p. 273–297, 1995. https://doi.org/10.1007/BF00994018
+21. WIDODO, A.; YANG, B.-S. Support vector machine in machine condition monitoring and fault diagnosis. *Mechanical Systems and Signal Processing*, v. 21, n. 6, p. 2560–2574, 2007. https://doi.org/10.1016/j.ymssp.2006.12.007
+22. LEI, Y. et al. Applications of machine learning to machine fault diagnosis: a review and roadmap. *Mechanical Systems and Signal Processing*, v. 138, art. 106587, 2020. https://doi.org/10.1016/j.ymssp.2019.106587
+23. HENDRIKS, J.; DUMOND, P.; KNOX, D. A. Towards better benchmarking using the CWRU bearing fault dataset. *Mechanical Systems and Signal Processing*, v. 169, art. 108732, 2022. https://doi.org/10.1016/j.ymssp.2021.108732
+24. KAPOOR, S.; NARAYANAN, A. Leakage and the reproducibility crisis in machine-learning-based science. *Patterns*, v. 4, n. 9, art. 100804, 2023. https://doi.org/10.1016/j.patter.2023.100804
+25. JIA, F.; LEI, Y.; LIN, J.; ZHOU, X.; LU, N. Deep neural networks: a promising tool for fault characteristic mining and intelligent diagnosis of rotating machinery with massive data. *Mechanical Systems and Signal Processing*, v. 72–73, p. 303–315, 2016. https://doi.org/10.1016/j.ymssp.2015.10.025

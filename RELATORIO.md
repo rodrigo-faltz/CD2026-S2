@@ -13,7 +13,8 @@ University (CWRU): **detectar** que um rolamento deixou de estar normal e **diag
 interna, esfera ou pista externa). Usamos 40 gravações do acelerômetro do lado do acionamento, todas da coleção de
 48 kHz — inclusive as normais —, o que elimina a necessidade de reamostrar sinais de taxas diferentes. Combinamos
 atributos estatísticos com **análise de envelope**, a técnica clássica de diagnóstico de rolamentos, e avaliamos tudo
-com validação cruzada **por carga** e **por diâmetro de defeito**, sempre separando gravações inteiras.
+com validação cruzada **por carga** e **por diâmetro de defeito**, separando gravações inteiras (a única exceção, um
+cenário otimista de detecção, está descrita na seção 4.3).
 
 Três resultados resumem o trabalho:
 
@@ -135,7 +136,9 @@ em diagnóstico por aprendizado de máquina [21, 22], mas não carregam conhecim
 O sinal DE de cada gravação é dividido em janelas contíguas de 16.384 amostras (0,34 s ≈ 10 rotações), sem sobreposição;
 o resto incompleto é descartado. A janela foi escolhida para que o espectro de envelope tenha resolução de 2,9 Hz,
 suficiente para separar as frequências de defeito (106, 139 e 160 Hz a 1772 rpm). Cada janela herda rótulo, carga e
-diâmetro da gravação. **Nenhuma divisão de dados separa janelas de uma mesma gravação.**
+diâmetro da gravação. **As divisões de dados não separam janelas de uma mesma gravação**, exceto no cenário 6.1 do
+notebook (referência normal em cada carga), em que cada gravação normal é dividida em terços no tempo — por isso ele é
+otimista quanto ao FPR.
 
 ### 4.2 Atributos
 
@@ -168,9 +171,21 @@ Dois conjuntos de atributos foram definidos antes de qualquer avaliação:
 ### 4.3 Protocolos de avaliação
 
 **Por que não usar um sorteio de janelas.** A divisão usual das aulas, `train_test_split` com sorteio de linhas, coloca
-janelas da mesma gravação no treino e no teste. No notebook (seção 5), esse sorteio deixa as 40 gravações dos dois lados
-e dá 99,3% de acurácia à Random Forest, contra 85,5% quando a carga de 0 HP inteira fica no teste. Por isso toda divisão
-é feita por gravação, com o `LeaveOneGroupOut` do scikit-learn (cada grupo vira teste uma vez).
+janelas da mesma gravação no treino e no teste. O notebook (seção 5) compara três divisões com a mesma Random Forest:
+
+| Divisão | Acurácia no teste |
+|---|---|
+| (a) sorteio de janelas (as 40 gravações ficam dos dois lados) | 99,3% |
+| (b) carga nova — teste em 0 / 1 / 2 / 3 HP | 85,5% / 100% / 99,7% / 99,3% |
+| (c) diâmetro novo, só falhas — teste em 0,007" / 0,014" / 0,021" | 33,7% / 32,8% / 5,3% |
+
+Separar por carga quase não muda a nota, porque no CWRU o mesmo rolamento é gravado nas quatro cargas e o modelo
+continua a reconhecê-lo; só a carga atípica de 0 HP cai. Com diâmetro novo, o rolamento do teste é realmente
+desconhecido, e a nota fica no nível do chute (33%) ou abaixo. O vazamento, portanto, não é só de janelas: é do
+rolamento. Por isso toda divisão é feita por gravação, com o `LeaveOneGroupOut` do scikit-learn (cada grupo vira teste
+uma vez), exceto no cenário 6.1, em que cada gravação normal é dividida em terços no tempo — por isso ele é otimista
+quanto ao FPR. Os dois tipos de grupo respondem perguntas diferentes: carga nova (mesmo rolamento, outra condição) e
+diâmetro novo (rolamento novo).
 
 **Protocolo 1 — carga não vista.** Validação cruzada com 4 dobras: treino com três cargas e teste na quarta. Cada
 gravação é testada exatamente uma vez.
@@ -288,8 +303,11 @@ Com três classes, um classificador aleatório teria macro-F1 ≈ 0,33.
 
 ### 5.5 Onde os erros acontecem
 
-- **Carga não vista:** os erros da Random Forest e da SVM se concentram em 0 HP (arquivos 174, 201, 213 e o normal 97) e
-  no diâmetro de 0,014" (174, 201, 202), quase sempre confundidos com esfera. O arquivo 174 tem só 3 janelas.
+- **Carga não vista:** os erros da Random Forest se concentram em 0 HP (27 das 32 janelas erradas; arquivos 201, 213 e
+  174) e no diâmetro de 0,014" (23 das 32), quase sempre confundidos com esfera. A SVM erra de forma mais espalhada,
+  principalmente em 1 e 2 HP (49 das 67 janelas erradas), sobretudo nos arquivos 202 (pista externa, 0,014") e 124
+  (esfera, 0,007"); ela também classifica 5 janelas do normal de 0 HP (arquivo 97) como esfera. O arquivo 174 tem só 3
+  janelas.
 - **Regra de envelope:** não reconhece **nenhuma** das 12 gravações de esfera. As esferas de 0,007" a 0 e 1 HP aparecem
   como pista interna (o indicador de BPFI é o maior); as demais ficam abaixo do limiar de normalidade. Cinco gravações
   de 0,014" (pista interna 174 e 177; pista externa 202, 203 e 204) também ficam abaixo do limiar. O normal de 0 HP
@@ -346,9 +364,11 @@ diagnóstico físico.
 
 A versão seguinte comparava também One-Class SVM, autoencoder, um baseline majoritário e um terceiro conjunto de
 atributos (estatísticos + espectro, com amplitude). Na versão final, esses itens foram retirados porque não mudavam
-nenhuma conclusão: One-Class SVM e autoencoder davam o mesmo resultado que Mahalanobis, e o conjunto com amplitude ficava
-empatado com o conjunto B. A seleção de hiperparâmetros passou a usar o `GridSearchCV` no formato visto em aula. As
-predições dos modelos mantidos são idênticas às da versão anterior.
+nenhuma conclusão: One-Class SVM e autoencoder tinham a mesma ROC-AUC e o mesmo padrão de falso alarme por carga que
+Mahalanobis e não o superaram em nenhum cenário (taxa de detecção igual ou menor, falso alarme igual ou maior), e o
+conjunto com amplitude ficava empatado com o conjunto B. O conjunto C (só envelope) passou a ser avaliado apenas no
+protocolo de diâmetro, onde ele faz diferença. A seleção de hiperparâmetros passou a usar o `GridSearchCV` no formato
+visto em aula. As predições dos modelos mantidos são idênticas às da versão anterior.
 
 ### 6.4 Limitações
 
@@ -388,7 +408,8 @@ aprendizado de máquina para refinar a decisão.
   sempre conferindo o SHA-256.
 - Versões dos pacotes e parâmetros ficam em [`resultados/ambiente.json`](resultados/ambiente.json); todas as métricas,
   predições e matrizes ficam em [`resultados/`](resultados/).
-- Duas execuções completas em diretórios limpos produziram resultados idênticos; ver [`VALIDACAO.md`](VALIDACAO.md).
+- A versão final foi executada do zero sem erros, e os números mantidos foram conferidos automaticamente contra a versão
+  anterior; ver [`VALIDACAO.md`](VALIDACAO.md).
 
 ## 9. Declaração de uso de inteligência artificial
 

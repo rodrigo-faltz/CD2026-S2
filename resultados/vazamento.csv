@@ -1,0 +1,9 @@
+Separação,Teste,Acurácia
+(a) sorteio de janelas,todas,0.9933110367892977
+(b) carga nova,0 HP,0.8549618320610687
+(b) carga nova,1 HP,1.0
+(b) carga nova,2 HP,0.996551724137931
+(b) carga nova,3 HP,0.993103448275862
+(c) diâmetro novo,"0.007""",0.33663366336633666
+(c) diâmetro novo,"0.014""",0.32752613240418116
+(c) diâmetro novo,"0.021""",0.05263157894736842

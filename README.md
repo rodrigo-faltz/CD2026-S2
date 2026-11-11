@@ -49,7 +49,8 @@ A tabela é copiada de [`resultados/tabela_resumo.md`](resultados/tabela_resumo.
 
 **Principais conclusões**
 
-- **Detecção:** os escores separam normal e falha quase perfeitamente (ROC-AUC de 0,975 a 1,000), mas o limiar não se
+- **Detecção:** os escores de Mahalanobis e do Isolation Forest separam normal e falha quase perfeitamente (ROC-AUC de
+  0,975 a 1,000), mas o limiar não se
   transfere entre cargas com só quatro gravações normais. Com uma referência normal em cada carga, a distância de
   Mahalanobis detecta 100% das falhas sem falsos alarmes.
 - **Diagnóstico com carga nova:** Random Forest acerta 96,8% das janelas e 92,5% das gravações. O pior caso é a carga de

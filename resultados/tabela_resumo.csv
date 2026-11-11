@@ -1,4 +1,4 @@
-Dataset,Técnica,Tipo de falha identificada,Taxa de detecção (TPR),Falso positivo (FPR),Acurácia por classe (recall)
+Dataset,Técnica,Tipo de falha identificada,Taxa de detecção (TPR),Falso positivo (FPR),Acurácia por classe (se houver diagnóstico)
 CWRU 48 kHz DE,"Curtose do envelope (indicador) — detecção, por janela",não se aplica,0.6789709172259508,0.0297029702970297,não se aplica
 CWRU 48 kHz DE,"Mahalanobis — detecção, por janela",não se aplica,0.7281879194630873,0.13861386138613863,não se aplica
 CWRU 48 kHz DE,"Isolation Forest — detecção, por janela",não se aplica,0.8076062639821029,0.0891089108910891,não se aplica

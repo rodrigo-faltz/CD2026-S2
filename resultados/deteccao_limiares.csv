@@ -1,21 +1,13 @@
 detector,carga_teste,limiar
 Curtose do envelope (indicador),0,0.33110630937273056
-Mahalanobis,0,493.8327018945541
+Mahalanobis,0,493.83270189455465
 Isolation Forest,0,0.5964395491134514
-One-Class SVM,0,-1.8886656526931888e-05
-Autoencoder,0,11.640496208073259
 Curtose do envelope (indicador),1,0.15985275533893029
-Mahalanobis,1,3709.387639870612
+Mahalanobis,1,3709.3876398706143
 Isolation Forest,1,0.6356772495194227
-One-Class SVM,1,0.0
-Autoencoder,1,96.38751485927315
 Curtose do envelope (indicador),2,0.22961028484450577
-Mahalanobis,2,1418.7344125101972
+Mahalanobis,2,1418.7344125101988
 Isolation Forest,2,0.6275047148318433
-One-Class SVM,2,-1.9236983672676793e-11
-Autoencoder,2,25.6980454965818
 Curtose do envelope (indicador),3,0.339946435931666
-Mahalanobis,3,1578.9409561885154
+Mahalanobis,3,1578.940956188512
 Isolation Forest,3,0.6245158964076744
-One-Class SVM,3,-1.2812306771081605e-13
-Autoencoder,3,31.247507367267563

@@ -3,9 +3,6 @@
 | CWRU 48 kHz DE | Curtose do envelope (indicador) — detecção, por janela | não se aplica                        |                   0.6790 |                 0.0297 | não se aplica                        |
 | CWRU 48 kHz DE | Mahalanobis — detecção, por janela                     | não se aplica                        |                   0.7282 |                 0.1386 | não se aplica                        |
 | CWRU 48 kHz DE | Isolation Forest — detecção, por janela                | não se aplica                        |                   0.8076 |                 0.0891 | não se aplica                        |
-| CWRU 48 kHz DE | One-Class SVM — detecção, por janela                   | não se aplica                        |                   0.5593 |                 0.1386 | não se aplica                        |
-| CWRU 48 kHz DE | Autoencoder — detecção, por janela                     | não se aplica                        |                   0.7192 |                 0.1386 | não se aplica                        |
 | CWRU 48 kHz DE | Random Forest — diagnóstico, por janela                | Pista interna; Esfera; Pista externa |                   0.9989 |                 0.0000 | N: 1.00; PI: 0.95; E: 0.99; PE: 0.95 |
 | CWRU 48 kHz DE | SVM RBF — diagnóstico, por janela                      | Pista interna; Esfera; Pista externa |                   1.0000 |                 0.0495 | N: 0.95; PI: 0.97; E: 0.92; PE: 0.90 |
-| CWRU 48 kHz DE | Baseline majoritário — diagnóstico, por janela         | Esfera                               |                   1.0000 |                 1.0000 | N: 0.00; PI: 0.00; E: 1.00; PE: 0.00 |
 | CWRU 48 kHz DE | Regra de envelope — diagnóstico, por gravação          | Pista interna; Pista externa         |                   0.5833 |                 0.2500 | N: 0.75; PI: 0.83; E: 0.00; PE: 0.75 |

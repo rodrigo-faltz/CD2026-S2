@@ -1,6 +1,6 @@
 {
   "python": "3.12.9 (tags/v3.12.9:fdb8142, Feb  4 2025, 15:27:58) [MSC v.1942 64 bit (AMD64)]",
-  "plataforma": "Windows-11-10.0.26200-SP0",
+  "plataforma": "Windows-10-10.0.19045-SP0",
   "pacotes": {
     "numpy": "2.5.4",
     "scipy": "1.18.1",

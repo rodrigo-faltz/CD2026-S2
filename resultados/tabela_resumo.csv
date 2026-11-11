@@ -2,9 +2,6 @@ Dataset,Técnica,Tipo de falha identificada,Taxa de detecção (TPR),Falso posit
 CWRU 48 kHz DE,"Curtose do envelope (indicador) — detecção, por janela",não se aplica,0.6789709172259508,0.0297029702970297,não se aplica
 CWRU 48 kHz DE,"Mahalanobis — detecção, por janela",não se aplica,0.7281879194630873,0.13861386138613863,não se aplica
 CWRU 48 kHz DE,"Isolation Forest — detecção, por janela",não se aplica,0.8076062639821029,0.0891089108910891,não se aplica
-CWRU 48 kHz DE,"One-Class SVM — detecção, por janela",não se aplica,0.5592841163310962,0.13861386138613863,não se aplica
-CWRU 48 kHz DE,"Autoencoder — detecção, por janela",não se aplica,0.7192393736017897,0.13861386138613863,não se aplica
 CWRU 48 kHz DE,"Random Forest — diagnóstico, por janela",Pista interna; Esfera; Pista externa,0.9988814317673378,0.0,N: 1.00; PI: 0.95; E: 0.99; PE: 0.95
 CWRU 48 kHz DE,"SVM RBF — diagnóstico, por janela",Pista interna; Esfera; Pista externa,1.0,0.04950495049504951,N: 0.95; PI: 0.97; E: 0.92; PE: 0.90
-CWRU 48 kHz DE,"Baseline majoritário — diagnóstico, por janela",Esfera,1.0,1.0,N: 0.00; PI: 0.00; E: 1.00; PE: 0.00
 CWRU 48 kHz DE,"Regra de envelope — diagnóstico, por gravação",Pista interna; Pista externa,0.5833333333333334,0.25,N: 0.75; PI: 0.83; E: 0.00; PE: 0.75

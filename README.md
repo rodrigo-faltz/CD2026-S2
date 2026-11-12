@@ -2,7 +2,12 @@
 
 **ECM514 — Ciência de Dados · Projeto Desafio do 2º semestre de 2026**
 
-**Integrantes:** Nome Sobrenome (RA) · Nome Sobrenome (RA) · Nome Sobrenome (RA)
+**Integrantes:**
+- Amanda Carolina Ambrizzi Ramin 22.00721-0
+- André Felipe Silva Xavier 22.01339-3
+- Otto Camargo Kuchkarian 22.00571-4
+- Rafael Assanti 22.01464-0
+- Rodrigo Fernandes Faltz 21.01660-7
 
 [![Abrir no Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rodrigo-faltz/CD2026-S2/blob/main/CWRU_Projeto.ipynb)
 

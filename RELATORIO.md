@@ -308,11 +308,17 @@ Com três classes, um classificador aleatório teria macro-F1 ≈ 0,33.
   principalmente em 1 e 2 HP (49 das 67 janelas erradas), sobretudo nos arquivos 202 (pista externa, 0,014") e 124
   (esfera, 0,007"); ela também classifica 5 janelas do normal de 0 HP (arquivo 97) como esfera. O arquivo 174 tem só 3
   janelas.
-- **Regra de envelope:** não reconhece **nenhuma** das 12 gravações de esfera. As esferas de 0,007" a 0 e 1 HP aparecem
+- **Regra de envelope, carga não vista:** não reconhece **nenhuma** das 12 gravações de esfera. As esferas de 0,007" a 0 e 1 HP aparecem
   como pista interna (o indicador de BPFI é o maior); as demais ficam abaixo do limiar de normalidade. Cinco gravações
   de 0,014" (pista interna 174 e 177; pista externa 202, 203 e 204) também ficam abaixo do limiar. O normal de 0 HP
   (97) tem indicador de pista interna alto (log₁₀ = 0,97): quando está no teste, é classificado como pista interna;
   quando está no treino, eleva o limiar de normalidade.
+- **Regra de envelope, diâmetro não visto:** sem a opção Normal, vence sempre o maior indicador. A regra acerta 10 de 12
+  gravações de pista interna, 10 de 12 de pista externa e 5 de 12 de esfera (124, 190, 227, 228 e 229), 25 de 36 no
+  total. Os acertos de esfera são quase todos por margem mínima: só na 227 o indicador de esfera (0,81) supera os outros
+  com folga (0,41 e 0,49); nas demais, a diferença para o segundo maior indicador fica entre 0,01 e 0,03. Os erros de
+  pista são todos de 0,014" (174 e 177 viram pista externa; 202 e 204 viram pista interna). Fonte:
+  `resultados/regra_envelope_diametro.csv`.
 - **Diâmetro não visto:** Random Forest e SVM com o conjunto B atribuem praticamente todas as gravações do diâmetro
   novo a uma única classe (por exemplo, todas as de 0,014" viram "Esfera").
 

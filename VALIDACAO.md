@@ -40,8 +40,21 @@ próprio Colab: numpy 2.4.6, scipy 1.16.3, pandas 2.2.3, scikit-learn 1.6.1 e ma
 | Acerto por gravação: carga nova / diâmetro novo (conjunto B) | 92,5% / 22,2% | 92,5% / 22,2% |
 
 A semente é a mesma (`SEED = 42`), mas o sorteio interno das árvores mudou entre as versões do scikit-learn, por isso só
-a Random Forest varia. Para reproduzir exatamente os números do relatório no Colab, instale as versões de
-`requirements.txt` antes de executar (instrução no README).
+a Random Forest varia.
+
+**Correção automática.** Depois desse teste, o notebook ganhou uma primeira célula que, só no Colab, instala o
+scikit-learn 1.9.1 antes de qualquer import, sem reiniciar a sessão. Ela foi verificada num ambiente que reproduz as
+versões do Colab acima:
+
+| Verificação | Resultado |
+|---|---|
+| Ambiente com as versões do Colab, sem a célula nova | Mesmas diferenças da tabela acima (a simulação reproduz o Colab) |
+| Mesmo ambiente trocando só o scikit-learn para 1.9.1 | Todos os números do relatório **idênticos** |
+| Sessão simulada do Colab, executando o notebook novo do início | A célula instalou o 1.9.1 sozinha; todos os números **idênticos** |
+| Execução local (fora do Colab) | A célula não instala nada; resultados idênticos |
+
+A confirmação final no serviço Colab deve ser repetida por um integrante: abrir pelo botão do README, *Executar tudo* e
+conferir que a primeira célula imprime `scikit-learn 1.9.1`.
 
 ### Integridade e protocolo
 

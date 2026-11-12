@@ -29,7 +29,7 @@ e termina com a leitura do resultado; as células só de infraestrutura (downloa
 | Dados empregados (40 arquivos MAT originais) | [`dados/raw/`](dados/raw/) · [`dados/manifesto.csv`](dados/manifesto.csv) |
 | Tabela resumo de resultados | [abaixo](#tabela-resumo-de-resultados) · [`resultados/tabela_resumo.csv`](resultados/tabela_resumo.csv) |
 | Matrizes de confusão completas | [Anexo A do relatório](RELATORIO.md#anexo-a--matrizes-de-confusão-completas) · `resultados/matriz_*.csv` |
-| Slides da apresentação (usados no vídeo) | [`APRESENTACAO.html`](APRESENTACAO.html) |
+| Slides da apresentação (usados no vídeo) | [Abrir no navegador (GitHub Pages)](https://rodrigo-faltz.github.io/CD2026-S2/) · arquivo [`docs/index.html`](docs/index.html) (funciona offline) |
 | Vídeo da apresentação (até 5 min) | [YouTube](https://youtu.be/iO8CtzLM2V0) |
 | Referências bibliográficas | [`REFERENCIAS.md`](REFERENCIAS.md) |
 | Declaração de uso de IA | [Seção 9 do relatório](RELATORIO.md#9-declaração-de-uso-de-inteligência-artificial) |
@@ -109,7 +109,7 @@ Com o repositório clonado, os dados de `dados/raw/` são usados diretamente (ap
 ```
 CWRU_Projeto.ipynb    notebook (única fonte de código)
 RELATORIO.md/.docx    relatório técnico
-APRESENTACAO.html     apresentação usada no vídeo
+docs/index.html       apresentação usada no vídeo (publicada pelo GitHub Pages)
 REFERENCIAS.md, VALIDACAO.md, requirements.txt
 dados/raw/            40 arquivos .mat originais
 dados/manifesto.csv   rastreabilidade dos dados

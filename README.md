@@ -73,7 +73,18 @@ A tabela é copiada de [`resultados/tabela_resumo.md`](resultados/tabela_resumo.
 
 Não é preciso GPU, conta do Kaggle nem upload de arquivos. O notebook baixa os 40 arquivos (≈ 275 MB) da fonte oficial
 do CWRU, confere o SHA-256 de cada um e gera tudo em `resultados/`. A execução leva cerca de 3 a 5 minutos. O Colab já
-traz as bibliotecas necessárias; as versões da execução de referência estão em `requirements.txt`.
+traz as bibliotecas necessárias.
+
+**Sobre os números.** Os resultados do relatório e de `resultados/` foram gerados com as versões de `requirements.txt`
+(scikit-learn 1.9.1). O Colab usa outras versões (no teste de 11/11/2026, scikit-learn 1.6.1), e com elas **só os
+números da Random Forest mudam um pouco**: por exemplo, a macro-F1 com 0 HP no teste vai de 0,83 para 0,85, e a acurácia
+da Random Forest com 0 HP na tabela de vazamento vai de 85,5% para 79,4%. Detecção, SVM e regra de envelope saem
+idênticos, e as conclusões não mudam. Para reproduzir **exatamente** os números do relatório no Colab, rode antes esta
+célula, reinicie a sessão quando o Colab pedir e depois use *Executar tudo*:
+
+```
+%pip install -q numpy==2.5.4 scipy==1.18.1 pandas==3.1.1 scikit-learn==1.9.1 matplotlib==3.11.2
+```
 
 ### Localmente
 

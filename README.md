@@ -29,9 +29,8 @@ e termina com a leitura do resultado; as células só de infraestrutura (downloa
 | Dados empregados (40 arquivos MAT originais) | [`dados/raw/`](dados/raw/) · [`dados/manifesto.csv`](dados/manifesto.csv) |
 | Tabela resumo de resultados | [abaixo](#tabela-resumo-de-resultados) · [`resultados/tabela_resumo.csv`](resultados/tabela_resumo.csv) |
 | Matrizes de confusão completas | [Anexo A do relatório](RELATORIO.md#anexo-a--matrizes-de-confusão-completas) · `resultados/matriz_*.csv` |
-| Slides da apresentação (usados no vídeo) | [`APRESENTACAO.html`](APRESENTACAO.html) — 15 slides narrados + 4 de apêndice, abra no navegador; versão em [PowerPoint](APRESENTACAO.pptx) e [PDF](APRESENTACAO.pdf) |
-| Vídeo da apresentação (até 5 min) | **YouTube:** _link do vídeo_ |
-| Roteiro com as falas dos 5 integrantes | [`ROTEIRO_APRESENTACAO.md`](ROTEIRO_APRESENTACAO.md) |
+| Slides da apresentação (usados no vídeo) | [`APRESENTACAO.html`](APRESENTACAO.html) |
+| Vídeo da apresentação (até 5 min) | [YouTube](https://youtu.be/iO8CtzLM2V0) |
 | Referências bibliográficas | [`REFERENCIAS.md`](REFERENCIAS.md) |
 | Declaração de uso de IA | [Seção 9 do relatório](RELATORIO.md#9-declaração-de-uso-de-inteligência-artificial) |
 | Registro de validação da execução | [`VALIDACAO.md`](VALIDACAO.md) |
@@ -110,7 +109,7 @@ Com o repositório clonado, os dados de `dados/raw/` são usados diretamente (ap
 ```
 CWRU_Projeto.ipynb    notebook (única fonte de código)
 RELATORIO.md/.docx    relatório técnico
-APRESENTACAO.html/.pptx/.pdf, ROTEIRO_APRESENTACAO.md
+APRESENTACAO.html     apresentação usada no vídeo
 REFERENCIAS.md, VALIDACAO.md, requirements.txt
 dados/raw/            40 arquivos .mat originais
 dados/manifesto.csv   rastreabilidade dos dados
